@@ -21,42 +21,58 @@ class UserController extends Controller
 
     }
 
+
     public function index()
     {
-        $listUser = $this->user->all();
-        return view('user.index', compact('listUser'));
+        $listUser       =    $this->user->all();
+
+        return          view('user.index'   ,   compact('listUser'));
     }
+
 
     public function create()
     {
-        $roles = $this->role->all();
-        return view('user.add', compact('roles'));
+        $roles          =    $this->role->all();
+
+        return          view('user.add'     ,   compact('roles'));
     }
+
 
     public function store(Request $request)
     {
         try {
             DB::beginTransaction();
+
             // Insert data to user table
-            $userCreate = $this->user->create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password)
+
+            $userCreate     = $this->user->create([
+
+                'name'          => $request->name,
+                'email'         => $request->email,
+                'password'      => Hash::make($request->password)
             ]);
 
             // Insert data to role_user
-            $userCreate->roles()->attach($request->roles);
-//            $roles = $request->roles;
-//            foreach ($roles as $roleId) {
-//                \DB::table('role_user')->insert([
-//                    'user_id' => $userCreate->id,
-//                    'role_id' => $roleId
-//                ]);
-//            }
+
+//            $userCreate->roles()->attach($request->roles);
+
+            $roles      =    $request->roles;
+
+            foreach ($roles as $roleId) {
+
+                \DB::table('role_user')->insert([
+
+                   'user_id'    => $userCreate->id,
+                   'role_id'    => $roleId
+               ]);
+            }
 
             DB::commit();
+
             return redirect()->route('user.index');
-        } catch (\Exception $exception) {
+        }
+        catch (\Exception $exception) {
+
             DB::rollBack();
         }
 
@@ -69,10 +85,17 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $roles = $this->role->all();
-        $user = $this->user->findOrfail($id);
-        $listRoleOfUser = DB::table('role_user')->where('user_id', $id)->pluck('role_id');
-        return view('user.edit', compact('roles', 'user', 'listRoleOfUser'));
+        $roles              =    $this->role->all();
+
+        $user               =    $this->user->findOrfail($id);
+
+        $listRoleOfUser     =    DB::table('role_user')->where('user_id', $id)->pluck('role_id');
+
+ //       dd($listRoleOfUser);
+
+        return              view(   'user.edit',
+
+                                compact('roles'   ,  'user'   ,  'listRoleOfUser'));
     }
 
     /**
@@ -85,19 +108,30 @@ class UserController extends Controller
     {
         try {
             DB::beginTransaction();
+
             // update user tabale
+
             $this->user->where('id', $id)->update([
-                'name' => $request->name,
-                'email' => $request->email
+
+                'name'      => $request->name,
+                'email'     => $request->email
             ]);
 
             // Update to role_user table
             DB::table('role_user')->where('user_id', $id)->delete();
+
             $userCreate = $this->user->find($id);
-            $userCreate->roles()->attach($request->roles);
+
+            foreach($request->roles as $role_id)
+
+                $userCreate->roles()->attach(Role::find($role_id) );
+
             DB::commit();
+
             return redirect()->route('user.index');
-        } catch (\Exception $exception) {
+        }
+        catch (\Exception $exception) {
+
             DB::rollBack();
         }
 

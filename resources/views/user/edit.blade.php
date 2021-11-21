@@ -19,13 +19,15 @@
 
 
                 <select class="form-control" style="margin-bottom: 20px;" name="roles[]" multiple="multiple">
+
                     @foreach($roles as $role)
-                        <option
-                                {{ $listRoleOfUser->contains($role->id) ? 'selected' : '' }}
-                                value="{{ $role->id }}">
+                        <option     {{ $listRoleOfUser->contains($role->id) ? 'selected' : '' }}
+                                    value = "{{ $role->id }}">
+
                             {{ $role->display_name }}
                         </option>
                     @endforeach
+
                 </select>
 
 

@@ -26,7 +26,9 @@
                 </div>
 
                 <select class="form-control" style="margin-bottom: 20px;" name="roles[]" multiple="multiple">
+
                     @foreach($roles as $role)
+
                         <option value="{{ $role->id }}">{{ $role->display_name }}</option>
                     @endforeach
 
