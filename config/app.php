@@ -175,6 +175,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        Barryvdh\Debugbar\ServiceProvider::class,       //If you don't use auto-discovery, my cas dont need
     ],
 
     /*
