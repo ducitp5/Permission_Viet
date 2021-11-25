@@ -34,7 +34,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/'          , [
             'as'            => 'user.index',
             'uses'          => 'UserController@index',
-//            'middleware' => 'checkacl:user-list'
+            'middleware'    => 'checkacl:user-list'
         ]);
 
         // create user
@@ -65,7 +65,7 @@ Route::middleware(['auth'])->group(function () {
             [
                 'as'            => 'role.index',
                 'uses'          => 'RoleController@index',
- //               'middleware'    => 'checkacl:role-list'
+                'middleware'    => 'checkacl:role-list'
             ]);
 
         // create role
