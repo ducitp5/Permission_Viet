@@ -42,7 +42,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/create'    , [
             'as'            => 'user.add',
             'uses'          => 'UserController@create',
- //           'middleware'    => 'checkacl:user-add'
+            'middleware'    => 'checkacl:user-add'
         ]);
 
         Route::post('/create'       ,    'UserController@store')->name('user.store');
@@ -63,18 +63,24 @@ Route::middleware(['auth'])->group(function () {
         // list role
         Route::get('/',
             [
-                'as' => 'role.index',
-                'uses' => 'RoleController@index',
-                'middleware' => 'checkacl:role-list'
+                'as'            => 'role.index',
+                'uses'          => 'RoleController@index',
+ //               'middleware'    => 'checkacl:role-list'
             ]);
+
         // create role
-        Route::get('/create', 'RoleController@create')->name('role.add');
-        Route::post('/create', 'RoleController@store')->name('role.store');
+
+        Route::get('/create'        , 'RoleController@create')  ->name('role.add');
+        Route::post('/create'       , 'RoleController@store')   ->name('role.store');
+
         // edit role
-        Route::get('/edit/{id}', 'RoleController@edit')->name('role.edit');
-        Route::post('/edit/{id}', 'RoleController@update')->name('role.edit');
+
+        Route::get('/edit/{id}'     , 'RoleController@edit')    ->name('role.edit');
+        Route::post('/edit/{id}'    , 'RoleController@update')  ->name('role.edit');
+
         // delete role
-        Route::get('/delete/{id}', 'RoleController@delete')->name('role.delete');
+
+        Route::get('/delete/{id}'   , 'RoleController@delete')  ->name('role.delete');
 
     });
 });
