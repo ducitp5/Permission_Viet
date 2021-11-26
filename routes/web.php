@@ -84,3 +84,5 @@ Route::middleware(['auth'])->group(function () {
 
     });
 });
+
+Route::get('/session', 'HomeController@session')->name('session');

@@ -25,4 +25,16 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
+    public function session()
+    {
+        // session_start();
+
+        // dd($_SESSION);
+
+
+ //       var_dump(session()->all());
+
+        dd(session()->all());
+    }
 }
