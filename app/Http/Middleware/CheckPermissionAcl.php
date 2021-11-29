@@ -17,9 +17,7 @@ class CheckPermissionAcl
      * @return mixed
      */
     public function handle($request, Closure $next, $permission = null)
-    {
-// Lay tat ca cac quyen khi user login vao he thong
-        // 1. Lay tat ca cac role cua user login vao he thong
+    {               
 //        $listRoleOfUser = DB::table('users')
 //            ->join('role_user', 'users.id', '=', 'role_user.user_id')
 //            ->join('roles', 'role_user.role_id', '=', 'roles.id')
@@ -27,33 +25,41 @@ class CheckPermissionAcl
 //            ->select('roles.*')
 //            ->get()->pluck('id')->toArray();
 
-//        dd(User  ::find(auth()->id()) ->roles()->get() ->pluck('id')->toArray());
-
-        $listRoleOfUser     = User  ::find(auth()->id())
-
-                                    ->roles()       ->select('roles.id')
+//         dd(User  ::find(auth()->id())   ->roles()       ->select('roles.id')
+//                                         ->pluck('id')   ->toArray());
+                
+        $listRoleOfUser     = User  ::find( auth()->id() )
+                                    
+                                    ->roles()       ->get()
+                                    
                                     ->pluck('id')   ->toArray();
 
+//        dd($listRoleOfUser);
 
-//         2. lay tat ca cac quyen khi user login vao he thong
+        $listPermissionOfUser     = DB::table('roles')
 
-        $listRoleOfUser     = DB::table('roles')
-
-            ->join('role_permission', 'roles.id', '=', 'role_permission.role_id')
-            ->join('permissions', 'role_permission.permission_id', '=', 'permissions.id')
-            ->whereIn('roles.id', $listRoleOfUser)
+            ->join('role_permission'  , 'roles.id'       , '='   , 'role_permission.role_id')
+            
+            ->join('permissions'      , 'permissions.id' , '='   , 'role_permission.permission_id')
+            
+            ->whereIn('roles.id'      , $listRoleOfUser)
+            
             ->select('permissions.*')
-            ->get()->pluck('id')->unique();
+            
+            ->get()     ->pluck('id')
+            
+            ->unique()
+        ;
 
-        // Lay tat ca cac quyen khi user login vao he thong
-        // lay ra ma man hinh tuong ung de check phan quyen
 
-        $checkPermission = Permission::where('name', $permission)->value('id');
+        $checkPermission    =    Permission     ::where('name'  ,  $permission)
+        
+                                                ->value('id');
 
-//        dd($checkPermission);
-        // kiem tra user dc phep vao man hinh nay khong?
-
-        if ( $listRoleOfUser->contains($checkPermission) ) {
+//        dd($listPermissionOfUser);
+        
+        if ( $listPermissionOfUser->contains($checkPermission) ) {
+            
             return $next($request);
         }
 
