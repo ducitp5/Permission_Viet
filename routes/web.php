@@ -85,4 +85,6 @@ Route::middleware(['auth'])->group(function () {
     });
 });
 
-Route::get('/session', 'HomeController@session')->name('session');
+Route::get('/session'   , 'HomeController@session') ->name('session');
+
+Route::get('/auth'      , 'HomeController@auth')    ->name('auth');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+//use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -28,13 +29,11 @@ class HomeController extends Controller
 
     public function session()
     {
-        // session_start();
-
-        // dd($_SESSION);
-
-
- //       var_dump(session()->all());
-
         dd(session()->all());
+    }
+    
+    public function auth()
+    {
+        dd(\Auth());
     }
 }
