@@ -16,8 +16,8 @@ class UserController extends Controller
 
     public function __construct(User $user, Role $role)
     {
-        $this->user = $user;
-        $this->role = $role;
+        $this->user     = $user;
+        $this->role     = $role;
 
     }
 
@@ -89,7 +89,8 @@ class UserController extends Controller
 
         $user               =    $this->user->findOrfail($id);
 
-        $listRoleOfUser     =    DB::table('role_user')->where('user_id', $id)->pluck('role_id');
+        $listRoleOfUser     =    DB::table('role_user')     ->where('user_id', $id)
+                                                            ->pluck('role_id');
 
  //       dd($listRoleOfUser);
 
@@ -107,50 +108,61 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         try {
+            
             DB::beginTransaction();
 
             // update user tabale
 
-            $this->user->where('id', $id)->update([
+            $this->user     ->where('id', $id)   ->update([
 
                 'name'      => $request->name,
                 'email'     => $request->email
             ]);
 
             // Update to role_user table
-            DB::table('role_user')->where('user_id', $id)->delete();
+            
+            DB::table('role_user')      ->where('user_id' , $id)     ->delete();
 
-            $userCreate = $this->user->find($id);
+            $userCreate     =    $this->user    ->find($id);
 
-            foreach($request->roles as $role_id)
+            foreach( $request->roles    as $role_id ){
 
-                $userCreate->roles()->attach(Role::find($role_id) );
-
+                $userCreate     ->roles()   ->attach( Role::find($role_id) );
+            }
+            
             DB::commit();
 
-            return redirect()->route('user.index');
+            return      redirect()->route('user.index');
         }
         catch (\Exception $exception) {
 
             DB::rollBack();
         }
-
-
     }
 
 
     public function delete($id)
     {
         try {
+            
             DB::beginTransaction();
+            
             // Delete user
-            $user = $this->user->find($id);
-            $user->delete($id);
+            
+            $user   =    $this->user->find($id);
+            
+            $user   ->delete($id);
+            
             // Delete user of role_user table
-            $user->roles()->detach();
+            
+            $user   ->roles()   ->detach();
+            
             DB::commit();
-            return redirect()->route('user.index');
-        } catch (\Exception $exception) {
+            
+            return      redirect()->route('user.index');
+        } 
+        catch (\Exception $exception) {
+            
             DB::rollBack();
         }
 

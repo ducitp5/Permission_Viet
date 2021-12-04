@@ -9,8 +9,8 @@ use DB;
 
 class RoleController extends Controller
 {
-    private $role;
-    private $permission;
+//    private $role;
+//    private $permission;
 
     public function __construct(Role $role, Permission $permission)
     {
@@ -56,11 +56,11 @@ class RoleController extends Controller
 
             // Insert data to role_permission
 
-            $roleCreate->permissions()->attach($request->permission);
+            $roleCreate     ->permissions()     ->attach(   $request->permission    );
 
             DB::commit();
 
-            return redirect()->route('role.index');
+            return      redirect()->route('role.index');
         }
         catch (\Exception $exception) {
 
@@ -73,49 +73,83 @@ class RoleController extends Controller
 
     public function edit($id)
     {
-        $permissions = $this->permission->all();
-        $role = $this->role->findOrfail($id);
-        $getAllPermissionOfRole = DB::table('role_permission')->where('role_id', $id)->pluck('permission_id');
-        return view('role.edit', compact('permissions', 'role', 'getAllPermissionOfRole'));
+        $permissions                = $this     ->permission    ->all();
+        
+        $role                       = $this     ->role          ->findOrfail($id);
+        
+        $getAllPermissionOfRole     = DB::table('role_permission')
+        
+                                        ->where('role_id', $id)     
+        
+                                        ->pluck('permission_id');
+        
+        return      view('role.edit'  ,  compact('permissions' , 'role' , 'getAllPermissionOfRole'));
     }
 
+    
     public function update(Request $request, $id)
     {
         try {
+            
             DB::beginTransaction();
+            
             // update to role table
-            $this->role->where('id', $id)->update([
-                'name' => $request->name,
-                'display_name' => $request->display_name
+            
+            $this->role     ->where('id', $id)  ->update([
+                
+                'name'          => $request->name,
+                
+                'display_name'  => $request->display_name
             ]);
 
             // update to role_permission table
-            DB::table('role_permission')->where('role_id', $id)->delete();
-            $roleCreate = $this->role->find($id);
-            $roleCreate->permissions()->attach($request->permission);
+            
+            DB::table('role_permission')    ->where('role_id', $id)     ->delete();
+            
+            $roleCreate     = $this->role   ->find($id);
+            
+//            dd($request->permission);
+            
+            $roleCreate     ->permissions()     ->attach($request->permission);
+            
             DB::commit();
-            return redirect()->route('role.index');
-        } catch (\Exception $exception) {
+            
+            return          redirect()->route('role.index');
+        } 
+        catch (\Exception $exception) {
+        
             DB::rollBack();
+            
             \Log::error('Loi:' . $exception->getMessage() . $exception->getLine());
         }
     }
+    
 
     public function delete($id)
     {
         try {
+            
             DB::beginTransaction();
+            
             // Delete role
-            $role = $this->role->find($id);
-            $role->delete($id);
+            
+            $role   =    $this->role->find($id);
+            
+            $role   ->delete($id);
+            
             // Delete user of role_permission table
-            $role->permissions()->detach();
+            
+            $role   ->permissions() ->detach();
+            
             DB::commit();
+            
             return redirect()->route('role.index');
-        } catch (\Exception $exception) {
+        } 
+        catch (\Exception $exception) {
+        
             DB::rollBack();
+         
             \Log::error('Loi:' . $exception->getMessage() . $exception->getLine());
         }
-
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
 //use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
@@ -14,7 +15,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except(['request']);
     }
 
     /**
@@ -24,7 +25,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $this->middleware('auth');
+        
+        return      view('home');
     }
 
     public function session()
@@ -34,6 +37,14 @@ class HomeController extends Controller
     
     public function auth()
     {
+        dd(Auth::user());
         dd(\Auth());
+    }
+    
+    public function request(Request $request)
+    {   
+ //       dd($request);
+ 
+        dd($request->expectsJson());
     }
 }

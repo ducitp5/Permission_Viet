@@ -17,7 +17,7 @@ class CheckPermissionAcl
      * @return mixed
      */
     public function handle($request, Closure $next, $permission = null)
-    {               
+    {
 //        $listRoleOfUser = DB::table('users')
 //            ->join('role_user', 'users.id', '=', 'role_user.user_id')
 //            ->join('roles', 'role_user.role_id', '=', 'roles.id')
@@ -27,11 +27,11 @@ class CheckPermissionAcl
 
 //         dd(User  ::find(auth()->id())   ->roles()       ->select('roles.id')
 //                                         ->pluck('id')   ->toArray());
-                
+
         $listRoleOfUser     = User  ::find( auth()->id() )
-                                    
+
                                     ->roles()       ->get()
-                                    
+
                                     ->pluck('id')   ->toArray();
 
 //        dd($listRoleOfUser);
@@ -39,27 +39,29 @@ class CheckPermissionAcl
         $listPermissionOfUser     = DB::table('roles')
 
             ->join('role_permission'  , 'roles.id'       , '='   , 'role_permission.role_id')
-            
+
             ->join('permissions'      , 'permissions.id' , '='   , 'role_permission.permission_id')
-            
+
             ->whereIn('roles.id'      , $listRoleOfUser)
-            
+
             ->select('permissions.*')
-            
+
             ->get()     ->pluck('id')
-            
+
             ->unique()
         ;
 
 
         $checkPermission    =    Permission     ::where('name'  ,  $permission)
-        
-                                                ->value('id');
 
+//                                                ->get('id')                      //  return colollection
+                                                ->value('id')                      //  return value 
+        ;
+       
 //        dd($listPermissionOfUser);
-        
+
         if ( $listPermissionOfUser->contains($checkPermission) ) {
-            
+
             return $next($request);
         }
 

@@ -15,8 +15,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    
     return view('welcome');
 });
+
 
 Auth::routes();
 
@@ -45,13 +47,17 @@ Route::middleware(['auth'])->group(function () {
             'middleware'    => 'checkacl:user-add'
         ]);
 
-        Route::post('/create'       ,    'UserController@store')->name('user.store');
+        Route::post('/create'       ,    'UserController@store')    ->name('user.store');
 
         // edit user
-        Route::get('/edit/{id}', 'UserController@edit')->name('user.edit');
-        Route::post('/edit/{id}', 'UserController@update')->name('user.edit');
+        
+        Route::get('/edit/{id}'     ,    'UserController@edit')     ->name('user.edit');
+        
+        Route::post('/edit/{id}'    ,    'UserController@update')   ->name('user.edit');
+        
         // delete user
-        Route::get('/delete/{id}', 'UserController@delete')->name('user.delete');
+        
+        Route::get('/delete/{id}'   ,    'UserController@delete')   ->name('user.delete');
 
     });
 
@@ -85,6 +91,8 @@ Route::middleware(['auth'])->group(function () {
     });
 });
 
-Route::get('/session'   , 'HomeController@session') ->name('session');
+Route::get('/session'       , 'HomeController@session')     ->name('session');
 
-Route::get('/auth'      , 'HomeController@auth')    ->name('auth');
+Route::get('/auth'          , 'HomeController@auth')        ->name('auth');
+
+Route::get('/request'       , 'HomeController@request')     ->name('request');

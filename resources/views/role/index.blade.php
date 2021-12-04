@@ -20,11 +20,13 @@
                 @foreach($listRole as $role)
                     <tr>
                         <th scope="row">{{ $loop->index + 1 }}</th>
+                        
                         <td>{{ $role->name }}</td>
                         <td>{{ $role->display_name }}</td>
                         <td>
-                            <a class="btn btn-primary" href={{ route('role.edit', ['id' => $role->id]) }}>Edit</a>
-                            <a class="btn btn-danger" href="{{ route('role.delete', ['id' => $role->id]) }}">Delete</a>
+                            <a class="btn btn-primary" href={{ route('role.edit'   , ['id' => $role->id]) }}>Edit</a>
+                    
+                            <a class="btn btn-danger" href="{{ route('role.delete' , ['id' => $role->id]) }}">Delete</a>
                         </td>
                     </tr>
                 @endforeach
