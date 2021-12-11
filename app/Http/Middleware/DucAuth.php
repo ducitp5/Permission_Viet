@@ -20,8 +20,21 @@ class DucAuth
      */
     public function handle($request, Closure $next, $permission = null)
     {  
-//       dd($_COOKIE['usercookie']);
-        if(session('user') || $_COOKIE['usercookie'])        return $next($request);
+//        dd($_COOKIE['usercookie']);
+        
+//        dd(session('user'));
+        
+        if(session('user')){
+            
+            return      $next($request);
+        }
+
+        if(isset($_COOKIE['usercookie'])){
+            
+            Session::put( 'user' , json_decode($_COOKIE['usercookie']) );
+            
+            return      $next($request);
+        }
         
         return      redirect()->route('login2');
 

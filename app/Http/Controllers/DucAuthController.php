@@ -123,6 +123,7 @@ class DucAuthController extends Controller
         if($user){
             
             Session::flush();  
+            unset($_COOKIE['usercookie']);
             
             if($request->remember){
                 
@@ -151,6 +152,21 @@ class DucAuthController extends Controller
                 return      redirect()->back();
             }
         }
+    }
+    
+    public function logout2(Request $request)
+    {                   
+        Session::flush();
+        
+        setcookie('usercookie', null, time() - 3600, '/');
+        
+        session()->flash('message' , 'logout success');
+        
+ //       dd(isset($_COOKIE['usercookie']));
+ //       dd($_COOKIE);
+ //       dd(session()->all());
+        
+        return      redirect()->route('login2');      
     }
     
     
