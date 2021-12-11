@@ -27,6 +27,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </head>
+
 <body>
     <div id="app">
     
@@ -36,7 +37,7 @@
             
                 <a class="navbar-brand" href="{{ url('/') }}">
                 
-                    {{ config('app.name' , 'Laravel') }}
+                    {{ config('app.name' , 'Laravel') }} Layout 2
                 </a>
                 
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -59,7 +60,7 @@
                         
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('session') }}"> Session </a>
-                        </li>
+                        </li>									
 						
                     </ul>
                     
@@ -95,7 +96,7 @@
                                 <a 		id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                 	 	data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 	 
-                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                    {{ Auth::user()->email }} <span class="caret"></span>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -115,9 +116,83 @@
                         @endguest
                     </ul>
                 </div>
+                                
             </div>
+            
         </nav>
 
+		
+		
+		
+		<div class="container">
+            
+                <a class="navbar-brand" href="{{ url('/') }}">
+                
+                    {{ config('app.name' , 'Laravel') }} Layout 22
+                </a>
+              
+             
+                <div>
+                
+                    <!-- Right Side Of Navbar -->
+                    
+                    <ul class="navbar-nav ">
+						
+                        <!-- Authentication Links -->
+<?php 
+    $user   =   \Session::get('user');
+    
+    if(! $user){        
+?>                        
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('login2') }}">{{ __('Login') }}</a>
+                            </li>
+                            
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('register2') }}">{{ __('Register') }}</a>
+                            </li> 
+<?php 
+    }
+    else{      
+?>                                                    
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('user2.index') }}">{{ 'Modul user' }}</a>
+                            </li>
+                            
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('role2.index') }}">{{ 'Modul role' }}</a>
+                            </li>
+                            
+                            <li class="nav-item dropdown">
+                            
+                                <a 		id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                	 	data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                	 
+                                    {{ $user->email }} <span class="caret"></span>
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdown" >
+                                
+                                    <a 	 class="dropdown-item" 		href="{{ route('logout2') }}"
+                                       	 onclick="event.preventDefault();
+                                         document.getElementById('logout-form').submit();">
+                                         
+                                        {{ __('Logout') }}
+                                    </a>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
+                                </div>
+                            </li>
+<?php 
+    }
+?>
+                    </ul>
+                </div>
+                                
+            </div>
+                
         <main class="py-4">
             @yield('content')
         </main>

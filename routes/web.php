@@ -22,9 +22,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home'  , [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-// Route::get('/users', 'UserController@index');
 
 Route::middleware(['auth'])->group(function () {
 
@@ -91,8 +90,37 @@ Route::middleware(['auth'])->group(function () {
     });
 });
 
-Route::get('/session'       , 'HomeController@session')     ->name('session');
 
-Route::get('/auth'          , 'HomeController@auth')        ->name('auth');
+Route::get ('/session'       , 'HomeController@session')         ->name('session');
+Route::get ('/auth'          , 'HomeController@auth')            ->name('auth');
+Route::get ('/request'       , 'HomeController@request')         ->name('request');
 
-Route::get('/request'       , 'HomeController@request')     ->name('request');
+Route::get ('/register2'     , 'DucAuthController@register2')    ->name('register2');
+Route::post('/register2'     , 'DucAuthController@registing2')   ->name('register2');
+
+Route::get ('/login2'        , 'DucAuthController@login2')       ->name('login2');
+Route::post('/login2'        , 'DucAuthController@loginning2')   ->name('login2');
+
+Route::get ('/logout2'       , 'DucAuthController@logout2')      ->name('logout2');
+
+
+Route::middleware(['ducauth'])->group(function () {
+    
+    Route::get ('/home2'            , 'DucAuthController@index2')      ->name('home2');
+    
+    
+    Route::prefix('users2')->group(function () {
+        
+        Route::get ('/index'        , 'DucAuthController@login2')      ->name('user2.index');
+                
+    });
+    
+    
+    Route::prefix('roles2')->group(function () {
+        
+        Route::get ('/index'        , 'DucAuthController@login2')      ->name('role2.index');
+        
+    });
+        
+    
+});
