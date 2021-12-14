@@ -114,16 +114,41 @@ Route::middleware(['ducauth'])->group(function () {
         Route::get ('/index'        , 'DucUserController@index')      
         
             ->name('user2.index')   ->middleware('ducpermis:user-list');
+        
+        Route::get('/create'        , 'DucUserController@create')
+            
+            ->name('user2.add')     ->middleware('ducpermis:user-add');
+        
+        Route::get ('/edit/{id}'    , 'DucUserController@edit')
+            
+            ->name('user2.edit')    ->middleware('ducpermis:user-edit');
+        
+        Route::post ('/edit/{id}'    , 'DucUserController@update')
+            
+            ->name('user2.edit')    ->middleware('ducpermis:user-edit');
+            
+        Route::get ('/delete/{id}'  , 'DucUserController@delete')
+            
+            ->name('user2.delete')  ->middleware('ducpermis:user-delete');
                 
     }) ;
-    
-        
     
     
     Route::prefix('roles2')->group(function () {
         
-        Route::get ('/index'        , 'DucAuthController@login2')      ->name('role2.index');
+        Route::get('/create'        , 'DucRoleController@create')       
         
+            ->name('role2.add')     ->middleware('ducpermis:role-add');
+        
+        Route::get ('/index'        , 'DucRoleController@index')        ->name('role2.index');
+        
+        Route::get ('/edit/{id}'    , 'DucUserController@edit')
+        
+            ->name('role2.edit')    ->middleware('ducpermis:user-edit');
+        
+        Route::get ('/delete/{id}'  , 'DucUserController@delete')
+            
+            ->name('role2.delete')  ->middleware('ducpermis:user-delete');
     });
         
     

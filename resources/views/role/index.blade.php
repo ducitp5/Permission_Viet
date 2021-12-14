@@ -1,10 +1,15 @@
-@extends('layouts.app')
+@extends( \Auth::user()		?	  'layouts.app'		:	'layouts.app2' )
 
 @section('content')
     <div class="container">
         <div class="row">
             <div class="col-md-12">
+@if(\Auth::user()) 
+
                 <a class="btn btn-primary" href="{{ route('role.add') }}">Add</a>
+@else()
+				<a class="btn btn-primary" href="{{ route('role2.add') }}">Add</a>
+@endif()
             </div>
             <table class="table">
                 <thead>
@@ -24,9 +29,17 @@
                         <td>{{ $role->name }}</td>
                         <td>{{ $role->display_name }}</td>
                         <td>
+@if(\Auth::user())
                             <a class="btn btn-primary" href={{ route('role.edit'   , ['id' => $role->id]) }}>Edit</a>
                     
                             <a class="btn btn-danger" href="{{ route('role.delete' , ['id' => $role->id]) }}">Delete</a>
+
+@else
+							<a class="btn btn-primary" href={{ route('role2.edit'   , ['id' => $role->id]) }}>Edit</a>
+                    
+                            <a class="btn btn-danger" href="{{ route('role2.delete' , ['id' => $role->id]) }}">Delete</a>
+						
+@endif
                         </td>
                     </tr>
                 @endforeach

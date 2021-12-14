@@ -6,8 +6,14 @@
         <div class="row">
             <div class="col-md-12">
             
+ @if(\Auth::user())      
+      
                 <a class="btn btn-primary" href="{{ route('user.add') }}">Add</a>
-                
+ 
+ @else()
+ 
+				<a class="btn btn-primary" href="{{ route('user2.add') }}">Add</a>
+ @endif()               
             </div>
 
             <table class="table">
@@ -15,6 +21,7 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
+                        <th scope="col">Id</th>
                         <th scope="col">name</th>
                         <th scope="col">email</th>
                         <th scope="col">action</th>
@@ -26,13 +33,19 @@
                 @foreach($listUser as $user)
                     <tr>
                         <th scope="row">{{ $loop->index + 1 }}</th>
-                        
+                        <td>{{ $user->id }}</td>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
                         <td>
+@if(\Auth::user())
                             <a class="btn btn-primary" href={{ route('user.edit'  , ['id' => $user->id]) }}>Edit</a>
                             
                             <a class="btn btn-danger" href="{{ route('user.delete', ['id' => $user->id]) }}">Delete</a>
+@else()
+							<a class="btn btn-primary" href={{ route('user2.edit'  , ['id' => $user->id]) }}>Edit</a>
+                            
+                            <a class="btn btn-danger" href="{{ route('user2.delete', ['id' => $user->id]) }}">Delete</a>
+@endif()
                         </td>
                     </tr>
                 @endforeach

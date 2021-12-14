@@ -20,34 +20,35 @@ class DucPermission
     {
         $user               =    session('user');   
         
-        $listRoleOfUser     =    DB::table('users')
+        $listRoleOfUser     =    DB::table('users')                                             // Builder
        
-           ->join('role_user'   , 'users.id'            , '='   , 'role_user.user_id')
+            ->join('role_user'   , 'users.id'            , '='   , 'role_user.user_id')         // --------
        
-           ->join('roles'       , 'role_user.role_id'   , '='   , 'roles.id')
+             ->join('roles'       , 'role_user.role_id'   , '='   , 'roles.id')                 //
            
-           ->where('users.id'   , $user->id)
+             ->where('users.id'   , $user->id)                                                  //
            
- //          ->select('roles.*')
+             ->select('roles.*')                                                                // ---------
            
-  //         ->get() 
+             ->get()                                                                            // Collection
            
-            ->pluck('id')   
+             ->pluck('id')                                                                      // Collection
            
-            ->toArray()
+             ->toArray()
         ;
         
         
-        dd($listRoleOfUser);
+//        dd($listRoleOfUser);
 
 //         dd(User  ::find(auth()->id())   ->roles()       ->select('roles.id')
 //                                         ->pluck('id')   ->toArray());
 
-//         $listRoleOfUser     = User  ::find( session('user')->id )
-
-//                                     ->roles()       ->get()
-
-//                                     ->pluck('id')   ->toArray();
+//        $listRoleOfUser     = User ::find( session('user')->id )
+//                                    ->roles()                           // Illuminate\Database\Eloquent\Relations\BelongsToMany
+//                                    ->get()                             // Illuminate\Database\Eloquent\Collection 
+//                                    ->pluck('id')                       // Illuminate\Support\Collection
+//                                    ->toArray()
+        ;
 
 
         $listPermissionOfUser     = DB::table('roles')
@@ -58,25 +59,21 @@ class DucPermission
 
             ->whereIn('roles.id'      , $listRoleOfUser)
 
-            ->select('permissions.*')
+            ->select('permissions.*')                               // Builder    
 
-           ->get()     
+            ->get()                                                 // Collection
 
-           ->pluck('id')      
+            ->pluck('id')      
             ->unique()
+            ->toArray()                                             // Array
         ;
-
-        dd($listPermissionOfUser);
 
         $checkPermission    =    Permission     ::where('name'  ,  $permission)
 
-//                                                ->get('id')                      //  return colollection
                                                 ->value('id')                      //  return value 
         ;
-       
-
-
-        if ( $listPermissionOfUser->contains($checkPermission) ) {
+               
+        if( in_array($checkPermission, $listPermissionOfUser) ) {
 
             return $next($request);
         }
