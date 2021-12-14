@@ -111,9 +111,11 @@ Route::middleware(['ducauth'])->group(function () {
     
     Route::prefix('users2')->group(function () {
         
-        Route::get ('/index'        , 'DucUserController@index')      ->name('user2.index');
+        Route::get ('/index'        , 'DucUserController@index')      
+        
+            ->name('user2.index')   ->middleware('ducpermis:user-list');
                 
-    });
+    }) ;
     
         
     
