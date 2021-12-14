@@ -36,6 +36,8 @@ class DucAuth
             return      $next($request);
         }
         
+        Session::flash('message', "you must login to continue");
+        
         return      redirect()->route('login2');
 
 //        return      abort(402);

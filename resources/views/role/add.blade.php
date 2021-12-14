@@ -18,7 +18,7 @@
                     
                     <label for="display_name">Display name</label>
                     
-                    <input type="text" class="form-control" placeholder="Enter display name" 	name="display_name">
+                    <input type="text" class="form-control" placeholder="Enter display name" 	name="display_name" required>
                 </div>
 
 

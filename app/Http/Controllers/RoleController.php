@@ -42,24 +42,25 @@ class RoleController extends Controller
 
     public function store(Request $request)
     {
+        
+        
         try {
 
             DB::beginTransaction();
 
             // Insert data to role table
-
+            
             $roleCreate     = $this->role->create([
-
+                
                 'name'          => $request->name,
                 'display_name'  => $request->display_name
             ]);
-
-            // Insert data to role_permission
-
+            // Insert data to role_permission            
+            
             $roleCreate     ->permissions()     ->attach(   $request->permission    );
 
             DB::commit();
-
+                        
             return      redirect()->route('role.index');
         }
         catch (\Exception $exception) {

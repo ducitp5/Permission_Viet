@@ -33,7 +33,7 @@ class UserController extends Controller
     public function create()
     {
         $roles          =    $this->role->all();
-
+        
         return          view('user.add'     ,   compact('roles'));
     }
 

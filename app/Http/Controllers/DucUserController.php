@@ -20,4 +20,10 @@ class DucUserController extends Controller
 
     }
 
+    public function index()
+    {
+        $listUser       =    $this->user->all();
+        
+        return          view('user.index'   ,   compact('listUser'));
+    }
 }

@@ -36,7 +36,8 @@ class DucAuthController extends Controller
     
     public function __construct(User $user)
     {
-        $this->user     =   $user;
+        $this->user         =   $user;
+        
 //        $this->middleware('auth')->except(['request']);
     }
 
@@ -112,8 +113,36 @@ class DucAuthController extends Controller
     
     public function login2()
     {
+//       dd(session('link'));
+//        dd(url()->previous() );
+//        dd(url()->current() );
+//        dd(route('logout2'));
+//        dd(url());
+//      dd(url('/login'));
+        
+        if (session('link')) {
+                        
+            if (url()->previous() == url('/login2')) {
+                
+                session(['link' => session('link')]);
+            }
+            else {
+                
+                session(['link' => url()->previous()]);
+            }
+        }
+        else{
+            
+            session(['link' => url()->previous()]);
+        }
+        
+//        if(!session('comeback'))    session::put('comeback' , true);
+        
+//        dd(session('comeback'));
+        
         return      view('ducauth.login');
     }
+    
     
     public function loginning2(Request $request)
     {                
@@ -122,7 +151,10 @@ class DucAuthController extends Controller
 
         if($user){
             
+            $locale     = Session::get('link');
+            $comeback   =   Session::get('comeback');
             Session::flush();  
+                        
             unset($_COOKIE['usercookie']);
             
             if($request->remember){
@@ -133,8 +165,16 @@ class DucAuthController extends Controller
                 
                 Session::put('user' ,   $user);
             }
-                      
-            return      redirect()->route('home2');
+            
+            Session::put('link'     , $locale);
+            Session::put('comeback' , $comeback);
+            
+//             dd(session('comeback'));
+//             dd(session('link'));
+//            dd(session('link') && session('comeback'));
+            if(session('link') && session('comeback'))         return      redirect(session('link'));
+            
+            else                        return      redirect()->route('home2');
         }
         else{
             
@@ -161,6 +201,8 @@ class DucAuthController extends Controller
         setcookie('usercookie', null, time() - 3600, '/');
         
         session()->flash('message' , 'logout success');
+        
+        Session::put('comeback' , false);
         
  //       dd(isset($_COOKIE['usercookie']));
  //       dd($_COOKIE);

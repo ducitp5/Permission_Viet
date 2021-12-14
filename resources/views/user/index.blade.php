@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends( \Auth::user()		?	  'layouts.app'		:	'layouts.app2' )
 
 @section('content')
 
