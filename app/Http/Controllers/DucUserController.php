@@ -34,6 +34,45 @@ class DucUserController extends Controller
         return          view('user.add'     ,   compact('roles'));
     }
     
+    public function store(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            
+            // Insert data to user table
+            
+            $userCreate     = $this->user->create([
+                
+                'name'          => $request->name,
+                'email'         => $request->email,
+                'password'      => Hash::make($request->password)
+            ]);
+            
+            // Insert data to role_user
+            
+            //            $userCreate->roles()->attach($request->roles);
+            
+            $roles      =    $request->roles;
+            
+            foreach ($roles as $roleId) {
+                
+                \DB::table('role_user')->insert([
+                    
+                    'user_id'    => $userCreate->id,
+                    'role_id'    => $roleId
+                ]);
+            }
+            
+            DB::commit();
+            
+            return redirect()->route('user2.index');
+        }
+        catch (\Exception $exception) {
+            
+            DB::rollBack();
+        }
+    }
+    
     public function edit($id)
     {
         $roles              =    $this->role->all();

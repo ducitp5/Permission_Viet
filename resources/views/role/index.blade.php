@@ -4,12 +4,21 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-@if(\Auth::user()) 
+<?php 
+
+    if(\Auth::user()){
+?>
+ 
 
                 <a class="btn btn-primary" href="{{ route('role.add') }}">Add</a>
-@else()
+<?php 
+    }
+    else{   
+?>
 				<a class="btn btn-primary" href="{{ route('role2.add') }}">Add</a>
-@endif()
+<?php 
+    }
+?>
             </div>
             <table class="table">
                 <thead>

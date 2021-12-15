@@ -23,18 +23,18 @@ class DucPermission
         $listRoleOfUser     =    DB::table('users')                                             // Builder
        
             ->join('role_user'   , 'users.id'            , '='   , 'role_user.user_id')         // --------
-       
-             ->join('roles'       , 'role_user.role_id'   , '='   , 'roles.id')                 //
-           
-             ->where('users.id'   , $user->id)                                                  //
-           
-             ->select('roles.*')                                                                // ---------
-           
-             ->get()                                                                            // Collection
-           
-             ->pluck('id')                                                                      // Collection
-           
-             ->toArray()
+            
+            ->join('roles'       , 'role_user.role_id'   , '='   , 'roles.id')                 //
+            
+            ->where('users.id'   , $user->id)                                                  //
+            
+            ->select('roles.*')                                                                // ---------
+            
+            ->get()                                                                            // Collection
+            
+            ->pluck('id')                                                                      // Collection
+            
+            ->toArray()
         ;
         
         

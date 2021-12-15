@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends( \Auth::user()		?	  'layouts.app'		:	'layouts.app2' )
 
 @section('content')
     <div class="container">
@@ -7,22 +7,22 @@
                 @csrf
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input type="text" class="form-control" placeholder="Enter name" name="name">
+                    <input type="text" required class="form-control" placeholder="Enter name" name="name">
                 </div>
 
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" class="form-control" placeholder="Enter email" name="email">
+                    <input type="email" required class="form-control" placeholder="Enter email" name="email">
                 </div>
 
                 <div class="form-group">
                     <label for="password">password</label>
-                    <input type="password" class="form-control" placeholder="Enter pass" name="password">
+                    <input type="password" required class="form-control" placeholder="Enter pass" name="password">
                 </div>
 
                 <div class="form-group">
                     <label for="confirm_password">re-password</label>
-                    <input type="password" class="form-control" placeholder="re-Enter pass" name="confirm_password">
+                    <input type="password" required class="form-control" placeholder="re-Enter pass" name="confirm_password">
                 </div>
 
                 <select class="form-control" style="margin-bottom: 20px;" name="roles[]" multiple="multiple">

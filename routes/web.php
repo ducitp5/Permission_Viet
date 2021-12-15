@@ -118,7 +118,11 @@ Route::middleware(['ducauth'])->group(function () {
         Route::get('/create'        , 'DucUserController@create')
             
             ->name('user2.add')     ->middleware('ducpermis:user-add');
-        
+            
+        Route::post('/create'        , 'DucUserController@store')
+            
+            ->name('user2.store')     ->middleware('ducpermis:user-add');
+            
         Route::get ('/edit/{id}'    , 'DucUserController@edit')
             
             ->name('user2.edit')    ->middleware('ducpermis:user-edit');
@@ -139,6 +143,10 @@ Route::middleware(['ducauth'])->group(function () {
         Route::get('/create'        , 'DucRoleController@create')       
         
             ->name('role2.add')     ->middleware('ducpermis:role-add');
+        
+        Route::post('/create'       , 'DucRoleController@store')    
+        
+            ->name('role2.store')   ->middleware('ducpermis:role-add');
         
         Route::get ('/index'        , 'DucRoleController@index')        ->name('role2.index');
         
