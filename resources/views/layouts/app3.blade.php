@@ -180,7 +180,7 @@
                                 {{ __('Logout') }}
                             </a>
 
-                            <form id="logout-form2" action="{{-- route('logout3') --}}" method="GET" style="display: none;">
+                            <form id="logout-form2" action="{{ route('logout3') }}" method="GET" style="display: none;">
                                 @csrf
                             </form>
                         </div>

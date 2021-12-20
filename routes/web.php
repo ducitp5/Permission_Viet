@@ -158,6 +158,8 @@ Route::middleware(['ducauth'])->group(function () {
 Route::get ('/login3'        , 'SpatieAuthController@login3')       ->name('login3');
 Route::post('/login3'        , 'SpatieAuthController@loginning3')   ->name('login3');
 
+Route::get ('/logout3'       , 'SpatieAuthController@logout3')      ->name('logout3');
+
 Route::middleware(['Spatieauth'])->group(function () {
     
     Route::get ('/home3'            , 'SpatieAuthController@index3')      ->name('home3');

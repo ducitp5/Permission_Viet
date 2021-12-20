@@ -52,7 +52,7 @@ class SpatieAuthController extends Controller
     {
         if (session('link')) {
             
-            if (url()->previous() == url('/login2')) {
+            if (url()->previous() == url('/login3')) {
                 
                 session(['link' => session('link')]);
             }
@@ -116,5 +116,19 @@ class SpatieAuthController extends Controller
                 return      redirect()->back();
             }
         }
+    }
+    
+    
+    public function logout3(Request $request)
+    {
+        Session::flush();
+        
+        setcookie('usercookie', null, time() - 3600, '/');
+        
+        session()->flash('message' , 'logout success');
+        
+        Session::put('comeback' , false);
+               
+        return      redirect()->route('login3');
     }
 }
