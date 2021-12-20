@@ -27,29 +27,29 @@
         	
         	<div class="fixed top-0 right-0 px-6 py-4 sm:block">
         	
-            	@if (Route::has('login'))
-            
-                	<div>
-                	
-                		@auth
-                    
-                            <a href="{{ url('/home') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Home</a>
-                            
-                        @else
-                        
-                            <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
-    
-                            @if (Route::has('register'))
-                                <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
-                            @endif
-                            
-                        @endauth
-                	
-                	</div>                   
-                    
-            	@endif            	
+@if (Route::has('login'))
+        
+            	<div>
             	
-               	<div class="fixed top-1 right-0 px-6 py-1 sm:block">   
+	@auth
+                
+                    <a href="{{ url('/home') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Home</a>
+                        
+	@else
+                    
+                    <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
+
+	@if (Route::has('register'))
+                    <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
+    @endif
+                        
+	@endauth
+            	
+            	</div>                   
+                
+@endif            	
+            	
+               	<div>   
                                
                     <a href="{{ url('/home2') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Home 2</a>                        
                 
@@ -58,6 +58,17 @@
                     <a href="{{ route('register2') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register 2</a>
             
                 </div>
+                
+                <div class="fixed top-3 right-0 px-6 py-1 sm:block">   
+                               
+                    <a href="{{ url('/home3') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Home 3</a>                        
+                
+                    <a href="{{ route('login3') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in 3</a>
+    
+                    <a href="{{ route('register2') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register 3</a>
+            
+                </div>
+                
             </div>
             
 	            
