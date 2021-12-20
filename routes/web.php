@@ -131,7 +131,7 @@ Route::middleware(['ducauth'])->group(function () {
             
             ->name('user2.delete')  ->middleware('ducpermis:user-delete');
                 
-    }) ;
+    });
     
     
     Route::prefix('roles2')->group(function () {
@@ -152,4 +152,27 @@ Route::middleware(['ducauth'])->group(function () {
     });
         
     
+});
+
+
+Route::get ('/login3'        , 'SpatieAuthController@login3')       ->name('login3');
+Route::post('/login3'        , 'SpatieAuthController@loginning3')   ->name('login3');
+
+Route::middleware(['Spatieauth'])->group(function () {
+    
+    Route::get ('/home3'            , 'SpatieAuthController@index3')      ->name('home3');
+    
+    
+    Route::prefix('users3')->group(function () {
+        
+                
+    });
+        
+        
+    Route::prefix('roles3')->group(function () {
+        
+        
+    });
+            
+            
 });
