@@ -5,15 +5,23 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-            
- @if(\Auth::user())      
-      
+ <?php 
+    if(\Auth::user()){
+ ?>           
                 <a class="btn btn-primary" href="{{ route('user.add') }}">Add</a>
- 
- @else()
- 
+ <?php 
+    }
+    elseif(session('layout') == '2'){
+ ?> 
 				<a class="btn btn-primary" href="{{ route('user2.add') }}">Add</a>
- @endif()               
+<?php 
+    }
+    elseif(session('layout') == '3'){
+?>
+				<a class="btn btn-primary" href="{{ route('user3.add') }}">Add</a>
+<?php 
+    }
+?>               
             </div>
 
             <table class="table">
@@ -37,15 +45,29 @@
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
                         <td>
-@if(\Auth::user())
+ <?php 
+    if(\Auth::user()){
+ ?> 
                             <a class="btn btn-primary" href={{ route('user.edit'  , ['id' => $user->id]) }}>Edit</a>
                             
                             <a class="btn btn-danger" href="{{ route('user.delete', ['id' => $user->id]) }}">Delete</a>
-@else()
+ <?php 
+    }
+    elseif(session('layout') == '2'){
+ ?> 
 							<a class="btn btn-primary" href={{ route('user2.edit'  , ['id' => $user->id]) }}>Edit</a>
                             
                             <a class="btn btn-danger" href="{{ route('user2.delete', ['id' => $user->id]) }}">Delete</a>
-@endif()
+<?php 
+    }
+    elseif(session('layout') == '3'){
+?>
+							<a class="btn btn-primary" href={{ route('user3.edit'  , ['id' => $user->id]) }}>Edit</a>
+                            
+                            <a class="btn btn-danger" href="{{ route('user3.delete', ['id' => $user->id]) }}">Delete</a>
+<?php 
+    }
+?>       
                         </td>
                     </tr>
                 @endforeach

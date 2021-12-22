@@ -156,7 +156,7 @@
     else{
 ?>
                     <li class="nav-item">
-{{--                         <a class="nav-link" href="{{ route('user3.index') }}">{{ 'Modul user' }}</a> 	--}}
+                        <a class="nav-link" href="{{ route('user3.index') }}">{{ 'Modul user' }}</a>
                     </li>
 
                     <li class="nav-item">

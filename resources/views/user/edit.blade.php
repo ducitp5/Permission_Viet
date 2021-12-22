@@ -32,7 +32,7 @@
                         
                                     value = "{{ $role->id }}">
 
-                            {{ $role->display_name }}
+                            {{ $role->name }}
                         </option>
                         
                     @endforeach

@@ -167,6 +167,15 @@ Route::middleware(['Spatieauth'])->group(function () {
     
     Route::prefix('users3')->group(function () {
         
+        Route::get ('/index'        , 'SpatieUserController@index')     ->name('user3.index');
+        
+        Route::get('/create'        , 'SpatieUserController@create')    ->name('user3.add');
+        
+        Route::get ('/edit/{id}'    , 'SpatieUserController@edit')      ->name('user3.edit');
+        
+        Route::post ('/edit/{id}'   , 'SpatieUserController@update')    ->name('user3.edit');
+        
+        Route::get ('/delete/{id}'  , 'SpatieUserController@delete')    ->name('user3.delete');
                 
     });
         
