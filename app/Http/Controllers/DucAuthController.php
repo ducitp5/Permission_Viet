@@ -151,7 +151,7 @@ class DucAuthController extends Controller
 
         if($user){
             
-            $locale     = Session::get('link');
+            $locale     =   Session::get('link');
             $comeback   =   Session::get('comeback');
             Session::flush();  
                         
@@ -166,6 +166,7 @@ class DucAuthController extends Controller
                 Session::put('user' ,   $user);
             }
             
+            Session::put('layout'   , '2');
             Session::put('link'     , $locale);
             Session::put('comeback' , $comeback);
             

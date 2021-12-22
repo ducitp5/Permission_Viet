@@ -66,6 +66,8 @@ class Kernel extends HttpKernel
 
         'checkacl'      => \App\Http\Middleware\CheckPermissionAcl::class,
         'ducauth'       => \App\Http\Middleware\DucAuth::class,
-        'ducpermis'       => \App\Http\Middleware\DucPermission::class,
+        'ducpermis'     => \App\Http\Middleware\DucPermission::class,
+        
+        'Spatieauth'    => \App\Http\Middleware\SpatieAuth::class,
     ];
 }

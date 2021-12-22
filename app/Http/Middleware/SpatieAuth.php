@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use DB;
 
-class DucAuth
+class SpatieAuth
 {
     /**
      * Handle an incoming request.
@@ -19,12 +19,8 @@ class DucAuth
      * @return mixed
      */
     public function handle($request, Closure $next, $permission = null)
-    {  
-//        dd($_COOKIE['usercookie']);
-        
-//        dd(session('user'));
-        
-        if( session('user') && (session('layout') == '2') ){
+    {          
+        if(session('user') && (session('layout') == '3') ){
             
             return      $next($request);
         }
@@ -38,9 +34,6 @@ class DucAuth
         
         Session::flash('message', "you must login to continue");
         
-        return      redirect()->route('login2');
-
-//        return      abort(402);
-
+        return      redirect()->route('login3');
     }
 }

@@ -177,6 +177,8 @@ return [
 
         Barryvdh\Debugbar\ServiceProvider::class,       //If you don't use auto-discovery, my cas dont need
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+        
+        Spatie\Permission\PermissionServiceProvider::class,     // to php artisan vendor:publish
     ],
 
     /*
