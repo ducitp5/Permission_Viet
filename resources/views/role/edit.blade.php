@@ -1,4 +1,5 @@
-@extends('layouts.app')
+@extends( 	\Auth::user()		?	'layouts.app'		:	'layouts.app'.session('layout'))
+
 
 @section('content')
 
