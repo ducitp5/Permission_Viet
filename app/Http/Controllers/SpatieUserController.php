@@ -30,8 +30,7 @@ class SpatieUserController extends Controller
 
     public function edit($id)
     {
-        $roles              =    $this->role->all();    
-//        dd($roles);
+        $roles              =    $this->role->all();   
 
         $user               =    $this->user->findOrfail($id);
 

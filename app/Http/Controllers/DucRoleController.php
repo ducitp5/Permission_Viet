@@ -34,8 +34,7 @@ class DucRoleController extends Controller
     {
         $permissions    = $this->permission->all();
         
-        return          view('role.add', compact('permissions'));
-        
+        return          view('role.add', compact('permissions'));        
     }
     
     public function store(Request $request)

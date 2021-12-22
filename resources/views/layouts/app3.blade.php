@@ -160,7 +160,7 @@
                     </li>
 
                     <li class="nav-item">
-{{--                        <a class="nav-link" href="{{ route('role3.index') }}">{{ 'Modul role' }}</a>	--}}
+                        <a class="nav-link" href="{{ route('role3.index') }}">{{ 'Modul role' }}</a>	
                     </li>
 
                     <li class="nav-item dropdown">

@@ -80,7 +80,7 @@ class SpatieAuthController extends Controller
             $locale     =   Session::get('link');
             $comeback   =   Session::get('comeback');
             Session::flush();
-            
+ //           dd(session()->all());
             unset($_COOKIE['usercookie']);
             
             if($request->remember){

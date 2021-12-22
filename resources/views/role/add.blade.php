@@ -28,8 +28,18 @@
                     <div class="form-check">
                     
                         <input type="checkbox" class="form-check-input" 	name="permission[]" 	value="{{ $permission->id }}">
-                  
+<?php 
+    if(\Auth::user() || (session('layout') =='2')){
+?>                  
                         <label class="form-check-label" >{{ $permission->display_name }}</label>
+<?php 
+    }
+    elseif(session('layout') =='3'){
+?>
+						<label class="form-check-label" >{{ $permission->name }}</label>
+<?php 
+    }
+?>
                     </div>
                     
                 @endforeach

@@ -190,7 +190,14 @@ Route::middleware(['Spatieauth'])->group(function () {
         
     Route::prefix('roles3')->group(function () {
         
+        Route::get ('/index'        , 'SpatieRoleController@index')         ->name('role3.index');
         
+        Route::get('/create'        , 'SpatieRoleController@create')        ->name('role3.add');
+        
+        Route::post('/create'       , 'SpatieRoleController@store')         ->name('role3.store');
+        
+        Route::get('/edit/{id}'     , 'SpatieRoleController@edit')    ->name('role3.edit');
+        Route::post('/edit/{id}'    , 'SpatieRoleController@update')  ->name('role3.edit');
     });
             
             
