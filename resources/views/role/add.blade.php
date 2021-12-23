@@ -12,16 +12,20 @@
                     
                     <label for="name">Name</label>
                     
-                    <input type="text" class="form-control" placeholder="Enter name" 			name="name">
-                </div>
-                
+                    <input type="text" class="form-control" placeholder="Enter name" 			name="name"			required>
+                </div>   
+<?php 
+    if(\Auth::user() || (session('layout') =='2')){
+?>                  
                 <div class="form-group">
                     
                     <label for="display_name">Display name</label>
                     
                     <input type="text" class="form-control" placeholder="Enter display name" 	name="display_name" required>
                 </div>
-
+<?php 
+    }
+?>
 
                 @foreach($permissions as $permission)
                 
