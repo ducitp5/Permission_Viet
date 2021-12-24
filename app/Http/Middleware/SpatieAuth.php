@@ -28,6 +28,7 @@ class SpatieAuth
         if(isset($_COOKIE['usercookie'])){
             
             Session::put( 'user' , json_decode($_COOKIE['usercookie']) );
+            session('layout' , '3');
             
             return      $next($request);
         }

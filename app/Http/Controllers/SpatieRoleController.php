@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
-use App\Models\User;
 use Illuminate\Http\Request;
-use Hash;
 use DB;
 
 class SpatieRoleController extends Controller
@@ -24,6 +22,8 @@ class SpatieRoleController extends Controller
     
     public function index()
     {
+        dd($this->role::find(8) );
+        
         $listRole   = $this->role->all();
                
         return      view('role.index', compact('listRole'));        
@@ -40,7 +40,7 @@ class SpatieRoleController extends Controller
     
     public function store(Request $request)
     {
-        dd($request->all());
+ //       dd($request->all());
         
         try {
             
@@ -54,11 +54,20 @@ class SpatieRoleController extends Controller
             ]);
             // Insert data to role_permission
             
-            $roleCreate     ->permissions()     ->attach(   $request->permission    );
+//            dd($roleCreate);
+            
+//            $creatpermis    =  $roleCreate     ->permissions()     ->attach(   $request->permission    );
+            
+//            dd($roleCreate     ->permissions);
+            
+            foreach ($request->permission as $permi){
+            
+                $roleCreate->givePermissionTo($permi);
+            }
             
             DB::commit();
             
-            return      redirect()->route('role2.index');
+            return      redirect()->route('role3.index');
         }
         catch (\Exception $exception) {
             
