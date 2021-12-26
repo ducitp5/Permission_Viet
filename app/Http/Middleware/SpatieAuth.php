@@ -20,16 +20,17 @@ class SpatieAuth
      */
     public function handle($request, Closure $next, $permission = null)
     {          
+        
         if(session('user') && (session('layout') == '3') ){
-            
+
             return      $next($request);
         }
 
         if(isset($_COOKIE['usercookie'])){
-            
+
             Session::put( 'user' , json_decode($_COOKIE['usercookie']) );
-            session('layout' , '3');
-            
+            session::put('layout' , '3');
+                        
             return      $next($request);
         }
         

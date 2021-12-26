@@ -3,17 +3,19 @@
 namespace App\Http\Controllers;
 
 use Spatie\Permission\Models\Role;
-use App\Models\User;
+use App\Models\User3;
 use Illuminate\Http\Request;
 use Hash;
 use DB;
 
 class SpatieUserController extends Controller
 {
-    private $user;
-    private $role;
+//     private $user;
+//     private $role;
 
-    public function __construct(User $user ,Role $role)
+   
+
+    public function __construct(User3 $user ,Role $role)
     {
         $this->user     =   $user;
         $this->role     =   $role;
@@ -34,9 +36,20 @@ class SpatieUserController extends Controller
 
         $user               =    $this->user->findOrfail($id);
 
-        $listRoleOfUser     =    DB::table('role_user')     ->where('user_id', $id)
-                                                            ->pluck('role_id');
+//        dd($user->roles()->get());                     // Illuminate\Database\Eloquent\Relations\MorphToMany
+//        dd(User::find($id)->with('roles')->get());     // dont use bcs belongtomany (not has many)          // Illuminate\Database\Eloquent\Builder
+        
+//         $listRoleOfUser     =    DB::table('role_user')     ->where('user_id', $id)
+//                                                             ->pluck('role_id');
 
+        $listRoleOfUser     =    $user->roles()->get();
+        
+//        dd($listRoleOfUser);
+        
+//        $userroles          =    $user::with('roles')->get();
+        
+//        dd($userroles);
+        
         return              view(   'user.edit',
 
                                     compact('roles'   ,  'user'   ,  'listRoleOfUser'));

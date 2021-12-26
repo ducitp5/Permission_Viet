@@ -8,9 +8,18 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+use Spatie\Permission\Traits\HasRoles;          // Spatie package
+
+use Illuminate\Database\Eloquent\Model;
+
+class User3 extends model
 {
-    use HasApiTokens, HasFactory, Notifiable;
+//    use HasApiTokens, HasFactory, Notifiable;
+
+    use HasRoles;                               // Spatie package
+    
+    protected $table      =   'users';
+    
     /**
      * The attributes that are mass assignable.
      *
@@ -41,9 +50,4 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-
-    public function roles()
-    {
-        return $this->belongsToMany(Role::class);
-    }
 }

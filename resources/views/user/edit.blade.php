@@ -1,6 +1,5 @@
 @extends( 	\Auth::user()		?	'layouts.app'		:	'layouts.app'.session('layout'))
 
-
 @section('content')
     <div class="container">
         <div class="row">
@@ -23,7 +22,9 @@
                     
                            value="{{ $user->email }}">
                 </div>
-
+<?php 
+// dd($listRoleOfUser); 
+?>
 
                 <select class="form-control" style="margin-bottom: 20px;" name="roles[]" multiple="multiple">
 
