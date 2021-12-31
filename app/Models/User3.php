@@ -17,9 +17,11 @@ class User3 extends model
 //    use HasApiTokens, HasFactory, Notifiable;
 
     use HasRoles;                               // Spatie package
-    
-    protected $table      =   'users';
-    
+
+    protected   $guard_name     =   'web';          //  LOG.error  The given role or permission should use guard `` instead of `web`
+
+    protected   $table          =   'users';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -50,4 +52,10 @@ class User3 extends model
         'email_verified_at' => 'datetime',
     ];
 
+//  LOG.error  The given role or permission should use guard `` instead of `web`
+
+//     public function guardName(){
+
+//         return "web";
+//     }
 }

@@ -175,7 +175,7 @@ Route::middleware(['Spatieauth'])->group(function () {
     
     Route::prefix('users3')->group(function () {
         
-        Route::get ('/index'        , 'SpatieUserController@index')     ->name('user3.index');
+        Route::get ('/'        , 'SpatieUserController@index')     ->name('user3.index');
         
         Route::get('/create'        , 'SpatieUserController@create')    ->name('user3.add');
         
