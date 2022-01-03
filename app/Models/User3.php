@@ -13,9 +13,7 @@ use Spatie\Permission\Traits\HasRoles;          // Spatie package
 use Illuminate\Database\Eloquent\Model;
 
 class User3 extends model
-{
-//    use HasApiTokens, HasFactory, Notifiable;
-
+{    
     use HasRoles;                               // Spatie package
 
     protected   $guard_name     =   'web';          //  LOG.error  The given role or permission should use guard `` instead of `web`

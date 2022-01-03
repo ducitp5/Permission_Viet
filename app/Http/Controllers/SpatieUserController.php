@@ -40,6 +40,46 @@ class SpatieUserController extends Controller
     }
 
 
+    public function create()
+    {
+        $roles          =    $this->role->all();
+        
+        return          view('user.add'     ,   compact('roles'));
+    }
+    
+    public function store(Request $request)
+    {        
+        try {
+            DB::beginTransaction();
+            
+            // Insert data to user table
+            
+            $userCreate     = $this->user->create([
+                
+                'name'          => $request->name,
+                'email'         => $request->email,
+                'password'      => md5($request->password)
+            ]);
+            
+            // Insert data to role_user
+            
+            //            $userCreate->roles()->attach($request->roles);
+            
+            $roles      =    $request->roles;
+            
+            $userCreate->syncRoles($roles);
+                        
+            DB::commit();
+            
+            return redirect()->route('user3.index');
+        }
+        catch (\Exception $exception) {
+            
+            DB::rollBack();
+        }
+    }
+    
+    
     public function edit($id)
     {
         $roles              =    $this->role->all();
@@ -66,33 +106,25 @@ class SpatieUserController extends Controller
                 'email'     => $request->email
             ]);
 
- //           dd($request->roles);
-
             $user     =    User3::find($id);
-
-            var_dump($user);
 
             try{
 
                 $user->roles()->detach();
 
-            //          methode 1 :     use attach relation belongtomany
-
 //            $user     ->roles()   ->attach( $request->roles);
-
-//          methode 2 :     use SpatieRole
 
                 $user->assignRole($request->roles) ;
 
             }
             catch (\Exception $exception) {
 
-                \Log::error('Loi SpatieUserController.update:' . $exception->getMessage() . $exception->getLine());
+                dd($exception);
             }
 
             DB::commit();
 
-//            return      redirect('/users3/edit/'.$id);
+            return      redirect('/users3/edit/'.$id);
         }
         catch (\Exception $exception) {
 
@@ -100,5 +132,16 @@ class SpatieUserController extends Controller
 
             DB::rollBack();
         }
+    }
+    
+    
+    public function delete($id)
+    {
+            $user   =    $this->user->find($id)->delete();
+                        
+            // user Spatie , auto detach roles attached
+                                    
+            return      redirect('users3');
+ 
     }
 }
