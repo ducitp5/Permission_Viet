@@ -150,11 +150,15 @@ Route::middleware(['ducauth'])->group(function () {
         
         Route::get ('/index'        , 'DucRoleController@index')        ->name('role2.index');
         
-        Route::get ('/edit/{id}'    , 'DucUserController@edit')
+        Route::get ('/edit/{id}'    , 'DucRoleController@edit')
         
-            ->name('role2.edit')    ->middleware('ducpermis:user-edit');
+            ->name('role2.edit')    ->middleware('ducpermis:role-edit');
         
-        Route::get ('/delete/{id}'  , 'DucUserController@delete')
+        Route::post('/edit/{id}'    , 'DucRoleController@update')
+            
+            ->name('role2.update')    ->middleware('ducpermis:role-edit');
+        
+        Route::get ('/delete/{id}'  , 'DucRoleController@delete')
             
             ->name('role2.delete')  ->middleware('ducpermis:user-delete');
     });
@@ -198,7 +202,7 @@ Route::middleware(['Spatieauth'])->group(function () {
         
         Route::post('/create'       , 'SpatieRoleController@store')         ->name('role3.store');
         
-        Route::get('/edit/{id}'     , 'SpatieRoleController@edit')    ->name('role3.edit');
+        Route::get('/edit/{id}'     , 'SpatieRoleController@edit')          ->name('role3.edit');
         Route::post('/edit/{id}'    , 'SpatieRoleController@update')  ->name('role3.edit');
     });
             

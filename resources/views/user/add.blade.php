@@ -28,8 +28,18 @@
                 <select class="form-control" style="margin-bottom: 20px;" name="roles[]" multiple="multiple">
 
                     @foreach($roles as $role)
-
+<?php 
+    if(session('layout') == '3'){
+?>
+						<option value="{{ $role->id }}">{{ $role->name }}</option>
+<?php 
+    }
+    else{
+?>
                         <option value="{{ $role->id }}">{{ $role->display_name }}</option>
+<?php 
+    }
+?>
                     @endforeach
 
                 </select>

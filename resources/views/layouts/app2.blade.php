@@ -122,10 +122,14 @@
         </nav>
 
 
-
-
 		<div class="container">
-
+<?php 
+    if(Session::has('message')){
+?>
+			<div> {{ Session::get('message') }} </div>
+<?php 
+    }
+?>
             <a class="navbar-brand" href="{{ url('/') }}">
 
                 {{ config('app.name' , 'Laravel') }} Layout 22
@@ -168,7 +172,7 @@
                         <a 		id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                         	 	data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
 
-                            {{ $user->email }} <span class="caret"></span>
+                            {{ $user->email }} <span class="caret">{{ $user->id }}</span>
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdown" >

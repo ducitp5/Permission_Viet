@@ -72,7 +72,7 @@ class DucPermission
 
                                                 ->value('id')                      //  return value 
         ;
-               
+        
         if( in_array($checkPermission, $listPermissionOfUser) ) {
 
             return $next($request);

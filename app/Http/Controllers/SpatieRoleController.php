@@ -21,9 +21,7 @@ class SpatieRoleController extends Controller
     // list all role
     
     public function index()
-    {
-        dd($this->role::find(8) );
-        
+    {        
         $listRole   = $this->role->all();
                
         return      view('role.index', compact('listRole'));        
@@ -39,41 +37,30 @@ class SpatieRoleController extends Controller
     
     
     public function store(Request $request)
-    {
- //       dd($request->all());
-        
-        try {
-            
-            DB::beginTransaction();
-            
-            // Insert data to role table
-            
+    {        
             $roleCreate     = $this->role->create([
                 
                 'name'          => $request->name,
             ]);
-            // Insert data to role_permission
             
-//            dd($roleCreate);
+            $roleCreate     ->permissions()     ->attach(   $request->permission    );            
             
-//            $creatpermis    =  $roleCreate     ->permissions()     ->attach(   $request->permission    );
-            
-//            dd($roleCreate     ->permissions);
-            
-            foreach ($request->permission as $permi){
-            
-                $roleCreate->givePermissionTo($permi);
-            }
-            
-            DB::commit();
-            
-            return      redirect()->route('role3.index');
-        }
-        catch (\Exception $exception) {
-            
-            DB::rollBack();
-            
-            \Log::error('Loi:' . $exception->getMessage() . $exception->getLine());
-        }
+            return      redirect()->route('role3.index');     
+    }
+    
+    
+    public function edit($id)
+    {
+        $permissions                = $this     ->permission    ->all();
+        
+        $role                       = $this     ->role          ->findOrfail($id);
+        
+        $getAllPermissionOfRole     = DB::table('role_has_permissions3')
+        
+                                        ->where('role_id', $id)
+                                        
+                                        ->pluck('permission_id');
+        
+        return      view('role.edit'  ,  compact('permissions' , 'role' , 'getAllPermissionOfRole'));
     }
 }

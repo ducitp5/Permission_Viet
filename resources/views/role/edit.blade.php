@@ -9,6 +9,10 @@
             <form class="col-md-8" method="post" action="">
                 @csrf
 
+				<div class="form-group">
+                    <label for="name">Role Id : {{ $role->id }}</label>                
+                </div>
+                
                 <div class="form-group">
                     <label for="name">Name</label>
                 
@@ -29,14 +33,26 @@
 
                 @foreach($permissions as $permission)
                 
-                    <div class="form-check">
-                    
+                    <div class="form-check">                    	
+                                 
                         <input 	type="checkbox"	class="form-check-input" name="permission[]" value="{{ $permission->id }}"
                         
                         		{{ $getAllPermissionOfRole->contains($permission->id) 	 ?	 'checked' 	  :   '' }} >
-                               
-                        <label class="form-check-label" > {{ $permission->display_name }} </label>
                         
+                        <label class="form-check-label" >
+                        
+                        	{{ $permission->id }}   :                      	
+                        	
+                        </label>
+                               
+                        <label class="form-check-label" >
+                        
+                        	@if(session('layout') == 3)	 {{ $permission->name }} 
+                        	
+                        	@else						 {{ $permission->display_name }}
+                         	@endif
+                        </label>
+                                          
                     </div>
                     
                 @endforeach

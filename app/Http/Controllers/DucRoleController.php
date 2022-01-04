@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Permission;
 use App\Models\Role;
-use App\Models\User;
 use Illuminate\Http\Request;
-use Hash;
 use DB;
 
 class DucRoleController extends Controller
@@ -66,4 +64,52 @@ class DucRoleController extends Controller
         }
     }
     
+    public function edit($id)
+    {
+        $permissions                = $this     ->permission    ->all();
+        
+        $role                       = $this     ->role          ->findOrfail($id);
+        
+        $getAllPermissionOfRole     = DB::table('role_permission')
+        
+                                        ->where('role_id', $id)
+                                        
+                                        ->pluck('permission_id');
+        
+        return      view('role.edit'  ,  compact('permissions' , 'role' , 'getAllPermissionOfRole'));
+    }
+    
+    
+    public function update(Request $request, $id)
+    {
+        try {
+            
+            DB::beginTransaction();
+            
+            // update to role table
+            
+            $this->role     ->where('id', $id)  ->update([
+                
+                'name'          => $request->name,
+                
+                'display_name'  => $request->display_name
+            ]);
+                        
+            DB::table('role_permission')    ->where('role_id', $id)     ->delete();
+            
+            $roleCreate     = $this->role   ->find($id);
+            
+            $roleCreate     ->permissions()     ->attach($request->permission);
+            
+            DB::commit();
+            
+            return         redirect()->back()->with('message' , 'da dong bo permission thanh cong');   
+        }
+        catch (\Exception $exception) {
+            
+            DB::rollBack();
+            
+            \Log::error('Loi:' . $exception->getMessage() . $exception->getLine());
+        }
+    }
 }
