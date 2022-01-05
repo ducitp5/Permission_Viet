@@ -203,7 +203,9 @@ Route::middleware(['Spatieauth'])->group(function () {
         Route::post('/create'       , 'SpatieRoleController@store')         ->name('role3.store');
         
         Route::get('/edit/{id}'     , 'SpatieRoleController@edit')          ->name('role3.edit');
-        Route::post('/edit/{id}'    , 'SpatieRoleController@update')  ->name('role3.edit');
+        Route::post('/edit/{id}'    , 'SpatieRoleController@update')        ->name('role3.edit');
+        
+        Route::get ('/delete/{id}'  , 'SpatieRoleController@delete')        ->name('role3.delete') ;
     });
             
             

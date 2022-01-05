@@ -63,4 +63,40 @@ class SpatieRoleController extends Controller
         
         return      view('role.edit'  ,  compact('permissions' , 'role' , 'getAllPermissionOfRole'));
     }
+    
+    
+    public function update(Request $request, $id)
+    {        
+        try {
+            
+            DB::beginTransaction();           
+           
+            $role   =   $this->role->find($id);
+            
+            $role  ->update([
+                
+                'name'          => $request->name,                    
+            ]);
+                  
+            $role     ->syncPermissions($request->permission);
+            
+            DB::commit();
+            
+            return         redirect()->back()->with('message' , 'da dong bo permission thanh cong');
+        }
+        catch (\Exception $exception) {
+            
+            DB::rollBack();
+            
+            dd($exception);
+        }
+    }
+    
+    
+    public function delete($id)
+    {            
+        $this->role->find($id)->delete();
+                                
+        return         redirect()->back()->with('message' , 'da xoa role thanh cong');       
+    }
 }

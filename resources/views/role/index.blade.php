@@ -73,7 +73,7 @@
 ?>
 							<a class="btn btn-primary" href={{ route('role3.edit'   , ['id' => $role->id]) }}>Edit3</a>
                     
-{{--                            <a class="btn btn-danger" href="{{ route('role3.delete' , ['id' => $role->id]) }}">Delete</a>		--}}
+                            <a class="btn btn-danger" href="{{ route('role3.delete' , ['id' => $role->id]) }}">Delete</a>
 <?php 
     }
 ?>						
