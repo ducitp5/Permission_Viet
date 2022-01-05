@@ -7,17 +7,18 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Hash;
 use DB;
+use App\Models\Permission;
 
 class DucUserController extends Controller
 {
     private $user;
     private $role;
-
-    public function __construct(User $user, Role $role)
+    private $permission;
+    public function __construct(User $user, Role $role, Permission $permi)
     {
-        $this->user     = $user;
-        $this->role     = $role;
-
+        $this->user         =   $user;
+        $this->role         =   $role;
+        $this->permission   =   $permi;
     }
 
     public function index()
@@ -77,10 +78,14 @@ class DucUserController extends Controller
         
         $listRoleOfUser     =    DB::table('role_user')     ->where('user_id', $id)
                                                             ->pluck('role_id');
-                
+        $permissions        =    $this->permission->all();
+        $PermissionOfUser   =    $user->permissionByDB();
+        
+ //       dd($user->permissionByDB(12));
+        
         return              view(   'user.edit',
             
-                                    compact('roles'   ,  'user'   ,  'listRoleOfUser'));
+                                    compact('roles'   ,  'user'   ,  'listRoleOfUser'   ,   'permissions'  ,   'PermissionOfUser'));
     }
     
     public function update(Request $request, $id)
@@ -117,4 +122,6 @@ class DucUserController extends Controller
             DB::rollBack();
         }
     }
+    
+    
 }

@@ -40,9 +40,40 @@
                     @endforeach
 
                 </select>
-
+                
+                <div class="form-group">
+                
+                    <label for="email">Permissions</label>
+                    
+                    @foreach($permissions as $permission)
+                
+                        <div class="form-check">                    	
+                                     
+                            <input 	type="checkbox"	class="form-check-input" name="permission[]" value="{{ $permission->id }}"
+                            
+                            		{{ $PermissionOfUser->contains($permission->id) 	 ?	 'checked' 	  :   '' }} >
+                            
+                            <label class="form-check-label" >
+                            
+                            	{{ $permission->id }}   :                      	
+                            	
+                            </label>
+                                   
+                            <label class="form-check-label" >
+                            
+                            	@if(session('layout') == 3)	 {{ $permission->name }} 
+                            	
+                            	@else						 {{ $permission->display_name }}
+                             	@endif
+                            </label>
+                                              
+                        </div>
+                        
+                    @endforeach
+                </div>
 
                 <button type="submit" class="btn btn-primary">Submit</button>
+                
             </form>
         </div>
     </div>

@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -45,5 +46,30 @@ class User extends Authenticatable
     public function roles()
     {
         return $this->belongsToMany(Role::class);
+    }
+    
+    public function permissionByDB()
+    {   
+        $listRoleOfUser         =    DB::table('role_user')     ->where('user_id', $this->id)
+                                                                ->pluck('role_id');        
+                                                            
+        $listPermissionOfUser   =    DB::table('roles')
+        
+            ->join('role_permission'  , 'roles.id'       , '='   , 'role_permission.role_id')
+            
+            ->join('permissions'      , 'permissions.id' , '='   , 'role_permission.permission_id')
+            
+            ->whereIn('roles.id'      , $listRoleOfUser)
+            
+            ->select('permissions.*')                               // Builder
+            
+            ->get()                                                 // Collection
+            
+            ->pluck('id')
+            ->unique()
+ //           ->toArray()                                             // Array
+        ;
+        
+        return     $listPermissionOfUser;
     }
 }
