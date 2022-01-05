@@ -39,17 +39,13 @@ class DucUserController extends Controller
         try {
             DB::beginTransaction();
             
-            // Insert data to user table
-            
             $userCreate     = $this->user->create([
                 
                 'name'          => $request->name,
                 'email'         => $request->email,
                 'password'      => Hash::make($request->password)
             ]);
-            
-            // Insert data to role_user
-            
+                        
             //            $userCreate->roles()->attach($request->roles);
             
             $roles      =    $request->roles;
@@ -81,12 +77,10 @@ class DucUserController extends Controller
         
         $listRoleOfUser     =    DB::table('role_user')     ->where('user_id', $id)
                                                             ->pluck('role_id');
-        
- //              dd($listRoleOfUser);
-        
+                
         return              view(   'user.edit',
             
-            compact('roles'   ,  'user'   ,  'listRoleOfUser'));
+                                    compact('roles'   ,  'user'   ,  'listRoleOfUser'));
     }
     
     public function update(Request $request, $id)

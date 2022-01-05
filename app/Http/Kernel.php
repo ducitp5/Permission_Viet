@@ -54,20 +54,24 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth' => \App\Http\Middleware\Authenticate::class,
-        'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
-        'can' => \Illuminate\Auth\Middleware\Authorize::class,
-        'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
-        'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
-        'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
-        'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-
-        'checkacl'      => \App\Http\Middleware\CheckPermissionAcl::class,
-        'ducauth'       => \App\Http\Middleware\DucAuth::class,
-        'ducpermis'     => \App\Http\Middleware\DucPermission::class,
         
-        'Spatieauth'    => \App\Http\Middleware\SpatieAuth::class,
+        'auth.basic'        => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+        'can'               => \Illuminate\Auth\Middleware\Authorize::class,
+        'password.confirm'  => \Illuminate\Auth\Middleware\RequirePassword::class,
+        'verified'          => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        
+        'cache.headers'     => \Illuminate\Http\Middleware\SetCacheHeaders::class,
+        
+        'signed'            => \Illuminate\Routing\Middleware\ValidateSignature::class,
+        'throttle'          => \Illuminate\Routing\Middleware\ThrottleRequests::class,        
+
+        'auth'              => \App\Http\Middleware\Authenticate::class,
+        'guest'             => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        
+        'checkacl'          => \App\Http\Middleware\CheckPermissionAcl::class,
+        'ducauth'           => \App\Http\Middleware\DucAuth::class,
+        'ducpermis'         => \App\Http\Middleware\DucPermission::class,
+        
+        'Spatieauth'        => \App\Http\Middleware\SpatieAuth::class,
     ];
 }
