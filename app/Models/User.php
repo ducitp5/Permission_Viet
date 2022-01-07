@@ -82,8 +82,8 @@ class User extends Authenticatable
         $permis                 =  collect();
         
         foreach ($listRoleOfUser as $role){
-        dd($role);
-            $permis->concat($role->permissions()->get());
+//        dd($role);
+            $permis->add($role->permissions()->get());
         }
         dd($permis);
         

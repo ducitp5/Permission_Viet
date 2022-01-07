@@ -79,7 +79,7 @@ class DucUserController extends Controller
         $listRoleOfUser     =    DB::table('role_user')     ->where('user_id', $id)
                                                             ->pluck('role_id');
         $permissions        =    $this->permission->all();
-        $PermissionOfUser   =    $user->permissionByModel();
+        $PermissionOfUser   =    $user->permissionByDB();
         
  //       dd($user->permissionByDB(12));
         
