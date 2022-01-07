@@ -79,7 +79,7 @@ class DucUserController extends Controller
         $listRoleOfUser     =    DB::table('role_user')     ->where('user_id', $id)
                                                             ->pluck('role_id');
         $permissions        =    $this->permission->all();
-        $PermissionOfUser   =    $user->permissionByDB();
+        $PermissionOfUser   =    $user->permissionByModel();
         
  //       dd($user->permissionByDB(12));
         
@@ -115,11 +115,12 @@ class DucUserController extends Controller
             
             DB::commit();
             
-            return      redirect()->route('user2.index');
+            return         redirect()->back()->with('message' , 'da update user thanh cong');
         }
         catch (\Exception $exception) {
             
             DB::rollBack();
+            dd($exception);
         }
     }
     

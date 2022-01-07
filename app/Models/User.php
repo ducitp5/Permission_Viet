@@ -65,11 +65,45 @@ class User extends Authenticatable
             
             ->get()                                                 // Collection
             
-            ->pluck('id')
+//            ->pluck('id')
             ->unique()
  //           ->toArray()                                             // Array
         ;
+//        dd($listPermissionOfUser);
+        return     $listPermissionOfUser;
+    }
+    
+    public function permissionByModel()
+    {
+        $listRoleOfUser         =    $this->roles()->get();
+ //       dd($listRoleOfUser[1]);
+ //       dd($listRoleOfUser[1]->permissions()->get());
         
+        $permis                 =  collect();
+        
+        foreach ($listRoleOfUser as $role){
+        dd($role);
+            $permis->concat($role->permissions()->get());
+        }
+        dd($permis);
+        
+        $listPermissionOfUser   =    DB::table('roles')
+        
+        ->join('role_permission'  , 'roles.id'       , '='   , 'role_permission.role_id')
+        
+        ->join('permissions'      , 'permissions.id' , '='   , 'role_permission.permission_id')
+        
+        ->whereIn('roles.id'      , $listRoleOfUser)
+        
+        ->select('permissions.*')                               // Builder
+        
+        ->get()                                                 // Collection
+        
+        //            ->pluck('id')
+        ->unique()
+        //           ->toArray()                                             // Array
+        ;
+                dd($listPermissionOfUser);
         return     $listPermissionOfUser;
     }
 }

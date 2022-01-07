@@ -40,38 +40,57 @@
                     @endforeach
 
                 </select>
-                
+<?php 
+    if(session('layout') !== '3'){
+?>                
                 <div class="form-group">
                 
-                    <label for="email">Permissions</label>
+                    <div class='row'>  
                     
-                    @foreach($permissions as $permission)
-                
-                        <div class="form-check">                    	
-                                     
-                            <input 	type="checkbox"	class="form-check-input" name="permission[]" value="{{ $permission->id }}"
+                    	<div class='col-sm'>
+                    	
+                        	<label for="email">User Permissions by Role</label>
                             
-                            		{{ $PermissionOfUser->contains($permission->id) 	 ?	 'checked' 	  :   '' }} >
-                            
-                            <label class="form-check-label" >
-                            
-                            	{{ $permission->id }}   :                      	
-                            	
-                            </label>
-                                   
-                            <label class="form-check-label" >
-                            
-                            	@if(session('layout') == 3)	 {{ $permission->name }} 
-                            	
-                            	@else						 {{ $permission->display_name }}
-                             	@endif
-                            </label>
-                                              
-                        </div>
+                            @foreach($permissions as $permission)
                         
-                    @endforeach
+                                <div class="form-check">                    	
+                                             
+                                    <input 	type="checkbox"	class="form-check-input" name="permission[]" value="{{ $permission->id }}" disabled="disabled"
+                                    
+                                    		{{ $PermissionOfUser->pluck('id')->contains($permission->id) 	 ?	 'checked' 	  :   '' }} >
+                                    
+                                    <label class="form-check-label" >
+                                    
+                                    	{{ $permission->id }}   :                      	
+                                    	
+                                    </label>
+                                           
+                                    <label class="form-check-label" >
+                                    
+                                    	@if(session('layout') == 3)	 {{ $permission->name }} 
+                                    	
+                                    	@else						 {{ $permission->display_name }}
+                                     	@endif
+                                    </label>
+                                                      
+                                </div>
+                                
+                            @endforeach
+                    	</div>
+                        
+                        <div class='col-sm'>
+                    	
+                        	<label for="email">Role Permissions</label>
+                            
+                            
+                    	</div>
+                        
+                    </div>
+                    
                 </div>
-
+<?php 
+    }
+?>
                 <button type="submit" class="btn btn-primary">Submit</button>
                 
             </form>
