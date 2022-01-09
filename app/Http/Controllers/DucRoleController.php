@@ -9,7 +9,7 @@ use DB;
 
 class DucRoleController extends Controller
 {
-    private $user;
+    private $permission;
     private $role;
 
     public function __construct(Role $role, Permission $permission)
@@ -113,8 +113,17 @@ class DucRoleController extends Controller
         }
     }
 
-    public function checkpermi(){
- //       dd('heree');
-        return 'helloeee';
+    public function checkpermi(Request $request){
+
+        $data            =   $request->all();
+        $id              =   $data['index'];
+        $listpermis      =   $this->role->find($id)->permissions()->get();
+ //       dd($listpermis);
+
+        echo    view('user.listpermis')
+
+            ->with('listPermis' , $listpermis)
+            ->with('id'         , $id)
+        ;
     }
 }

@@ -80,9 +80,7 @@
 
                         <div class='col-sm'>
 
-                        	<label for="email">Role Permissions</label>
-
-                            <div id="permis"> hhe</div>
+                            <div id="permis">click a role to view its permissons</div>
 
                     	</div>
 
@@ -97,8 +95,11 @@
             </form>
         </div>
     </div>
+{{--
+<script src="{{asset('public/js/jquery.js')}}"></script> --}}
 
-<script src="{{asset('public/js/jquery.js')}}"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script type="text/javascript">
 
@@ -121,12 +122,6 @@
 
             $(".roleid").click(function(){
 
-                alert($(this).val());
-
-                // alert("Text: " + $(this).text());
-
-                // alert("val: " + $(this).attr('value'));
-
                 var index = $(this).val();
 
 //                var product_id = $(this).data('product_id');
@@ -140,19 +135,12 @@
                     data        :
                     {
                         index       :index,
-                        _token:_token
+                        _token      :_token
                     },
 
                     success     :function(data)
                     {
-                        if(data == 'done')
-                        {
-                        alert("Bạn đã đánh giá "+index +" trên 5");
-                        }
-                        else
-                        {
-                        alert(data);
-                        }
+                        $('#permis').html(data);
                     }
                 });
 

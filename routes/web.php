@@ -90,7 +90,7 @@ Route::middleware(['auth'])->group(function () {
     });
 });
 
-Route::post('/checkpermi'    , 'DucRoleController@checkpermi');
+Route::post('/checkpermi'    ,   'DucRoleController@checkpermi');
 
 Route::get ('/session'       , 'HomeController@session')         ->name('session');
 Route::get ('/auth'          , 'HomeController@auth')            ->name('auth');
