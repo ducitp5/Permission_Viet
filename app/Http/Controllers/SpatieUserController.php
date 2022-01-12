@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use App\Models\User3;
 use Illuminate\Http\Request;
@@ -14,10 +15,11 @@ class SpatieUserController extends Controller
 //     private $role;
 
 
-    public function __construct(User3 $user ,Role $role)
+    public function __construct(User3 $user, Role $role, Permission $permi )
     {
-        $this->user     =   $user;
-        $this->role     =   $role;
+        $this->user         =   $user;
+        $this->role         =   $role;
+        $this->permission   =   $permi;
     }
 
 
@@ -43,43 +45,43 @@ class SpatieUserController extends Controller
     public function create()
     {
         $roles          =    $this->role->all();
-        
+
         return          view('user.add'     ,   compact('roles'));
     }
-    
+
     public function store(Request $request)
-    {        
+    {
         try {
             DB::beginTransaction();
-            
+
             // Insert data to user table
-            
+
             $userCreate     = $this->user->create([
-                
+
                 'name'          => $request->name,
                 'email'         => $request->email,
                 'password'      => md5($request->password)
             ]);
-            
+
             // Insert data to role_user
-            
+
             //            $userCreate->roles()->attach($request->roles);
-            
+
             $roles      =    $request->roles;
-            
+
             $userCreate->syncRoles($roles);
-                        
+
             DB::commit();
-            
+
             return redirect()->route('user3.index');
         }
         catch (\Exception $exception) {
-            
+
             DB::rollBack();
         }
     }
-    
-    
+
+
     public function edit($id)
     {
         $roles              =    $this->role->all();
@@ -88,9 +90,15 @@ class SpatieUserController extends Controller
 
         $listRoleOfUser     =    $user->roles()->get();
 
+        $permissions        =    $this->permission->all();
+
+        $PermissionOfUser   =    $user->getPermissionsViaRoles();
+
         return              view(   'user.edit',
 
-                                    compact('roles'   ,  'user'   ,  'listRoleOfUser'));
+                                    compact('roles'   ,  'user'   ,  'listRoleOfUser'   ,
+
+                                            'permissions',      'PermissionOfUser'));
     }
 
 
@@ -133,15 +141,15 @@ class SpatieUserController extends Controller
             DB::rollBack();
         }
     }
-    
-    
+
+
     public function delete($id)
     {
             $user   =    $this->user->find($id)->delete();
-                        
+
             // user Spatie , auto detach roles attached
-                                    
+
             return      redirect('users3');
- 
+
     }
 }

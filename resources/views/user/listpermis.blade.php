@@ -1,7 +1,7 @@
 
 
-<label for="email">Role Permissions : {{ $id }}</label>
-
+<p for="email">Role : {{ $role->id }} - {{ $role->name }}</p>
+<label for="email">Role s' Permissions :</label>
 <div>
     <table class="table">
         <thead>

@@ -150,6 +150,7 @@ Route::middleware(['Spatieauth'])->group(function () {
 
     Route::get ('/home3'            , 'SpatieAuthController@index3')    ->name('home3');
 
+    Route::post('/checkpermi3'      , 'SpatieRoleController@checkpermi3');
 
     Route::prefix('users3')->group(function () {
 

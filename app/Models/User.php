@@ -47,63 +47,50 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Role::class);
     }
-    
+
     public function permissionByDB()
-    {   
+    {
         $listRoleOfUser         =    DB::table('role_user')     ->where('user_id', $this->id)
-                                                                ->pluck('role_id');        
-                                                            
+                                                                ->pluck('role_id');
+
         $listPermissionOfUser   =    DB::table('roles')
-        
+
             ->join('role_permission'  , 'roles.id'       , '='   , 'role_permission.role_id')
-            
+
             ->join('permissions'      , 'permissions.id' , '='   , 'role_permission.permission_id')
-            
+
             ->whereIn('roles.id'      , $listRoleOfUser)
-            
+
             ->select('permissions.*')                               // Builder
-            
+
             ->get()                                                 // Collection
-            
-//            ->pluck('id')
+
             ->unique()
- //           ->toArray()                                             // Array
         ;
-//        dd($listPermissionOfUser);
+
         return     $listPermissionOfUser;
     }
-    
+
     public function permissionByModel()
     {
         $listRoleOfUser         =    $this->roles()->get();
- //       dd($listRoleOfUser[1]);
- //       dd($listRoleOfUser[1]->permissions()->get());
-        
-        $permis                 =  collect();
-        
+
+        $listPermissionOfUser   =    collect();
+
         foreach ($listRoleOfUser as $role){
-//        dd($role);
-            $permis->add($role->permissions()->get());
+
+            $listPermissOfRole    =   $role->permissions()->get();
+
+            foreach($listPermissOfRole as $permi){
+
+                $listPermissionOfUser->add($permi);
+            }
+
         }
-        dd($permis);
-        
-        $listPermissionOfUser   =    DB::table('roles')
-        
-        ->join('role_permission'  , 'roles.id'       , '='   , 'role_permission.role_id')
-        
-        ->join('permissions'      , 'permissions.id' , '='   , 'role_permission.permission_id')
-        
-        ->whereIn('roles.id'      , $listRoleOfUser)
-        
-        ->select('permissions.*')                               // Builder
-        
-        ->get()                                                 // Collection
-        
-        //            ->pluck('id')
-        ->unique()
-        //           ->toArray()                                             // Array
-        ;
-                dd($listPermissionOfUser);
+        $listPermissionOfUser    =   $listPermissionOfUser->unique('id');
+
         return     $listPermissionOfUser;
     }
+
+
 }

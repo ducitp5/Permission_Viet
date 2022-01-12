@@ -115,15 +115,12 @@ class DucRoleController extends Controller
 
     public function checkpermi(Request $request){
 
-        $data            =   $request->all();
-        $id              =   $data['index'];
-        $listpermis      =   $this->role->find($id)->permissions()->get();
- //       dd($listpermis);
+        $id     =   $request->all()['roleID'];
 
         echo    view('user.listpermis')
 
-            ->with('listPermis' , $listpermis)
-            ->with('id'         , $id)
+            ->with('role'       , $this->role->find($id))
+            ->with('listPermis' , $this->role->find($id)->permissions()->get())
         ;
     }
 }
