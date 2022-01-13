@@ -23,24 +23,6 @@
 
                            value="{{ $user->email }}">
                 </div>
-<?php
-// dd($listRoleOfUser);
-?>
-
-                {{-- <select class="form-control" style="margin-bottom: 20px;" name="roles[]" multiple="multiple" size="7">
-
-                    @foreach($roles as $role)
-
-                        <option     {{ $listRoleOfUser->contains($role->id) 	?	 'selected style=color:green' 	:	 '' }}
-
-                                    class = 'roleid'    value = "{{ $role->id }}" >
-
-                            {{ $role->id }} - {{ $role->name }}
-                        </option>
-
-                    @endforeach
-
-                </select> --}}
 
                 <div class="form-group">
 
@@ -71,9 +53,7 @@
                     </div>
 
                 </div>
-<?php
-//    if(session('layout') !== '3'){
-?>
+
                 <div class="form-group">
 
                     <div class='row'>
@@ -86,7 +66,7 @@
 
                                 <div class="form-check">
 
-                                    <input 	type="checkbox"	class="form-check-input" name="permission[]" value="{{ $permission->id }}" disabled="disabled"
+                                    <input 	type="checkbox"	class="form-check-input" name="permission[]" value="{{ $permission->id }}" disabled
 
                                     		{{ $PermissionOfUser->pluck('id')->contains($permission->id) 	 ?	 'checked' 	  :   '' }} >
 
@@ -113,13 +93,35 @@
 
                             <div>direct permissions</div>
 <?php
-    $directPermis   =   $user->getDirectPermissions();
+//dd($user->getDirectPermissions())
 ?>
-                            @foreach($directPermis as $key => $directpermi)
+                            @foreach($permissions as $permission)
 
                                 <div class="form-check">
 
-                                    <label class="form-check-label" >    {{ $directpermi->id }} - {{ $directpermi->name }}    </label>
+                                    <input    type="checkbox" {{ $user->getDirectPermissions()->contains($permission->id) 	?	 'checked' 	:	 '' }}
+
+                                              name="directPermis[]"    value = "{{ $permission->id }}" >
+
+                                    <label class="form-check-label" >    {{ $permission->id }} - {{ $permission->name }}    </label>
+                                </div>
+                            @endforeach
+
+                    	</div>
+
+                        <div class='col-sm'>
+
+                            <div>All permissions</div>
+
+                            @foreach($permissions as $permission)
+
+                                <div class="form-check">
+
+                                    <input    type="checkbox" {{ $user->getAllPermissions()->contains($permission->id) 	?	 'checked' 	:	 '' }}
+
+                                              name="directPermis[]"    value = "{{ $permission->id }}" disabled>
+
+                                    <label class="form-check-label" >    {{ $permission->id }} - {{ $permission->name }}    </label>
                                 </div>
                             @endforeach
 
@@ -128,9 +130,7 @@
                     </div>
 
                 </div>
-<?php
-//    }
-?>
+
                 <button type="submit" class="btn btn-primary">Submit</button>
 
             </form>

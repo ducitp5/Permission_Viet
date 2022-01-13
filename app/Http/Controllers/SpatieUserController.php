@@ -38,7 +38,7 @@ class SpatieUserController extends Controller
     {
         $listUser       =    $this->user->all();
 
-        return          view('user.index'   ,   compact('listUser'));
+        return          view('user3.index'   ,   compact('listUser'));
     }
 
 
@@ -104,6 +104,8 @@ class SpatieUserController extends Controller
 
     public function update(Request $request, $id)
     {
+//        dd($request->directPermis);
+
         try {
 
             DB::beginTransaction();
@@ -118,12 +120,9 @@ class SpatieUserController extends Controller
 
             try{
 
-                $user->roles()->detach();
+                $user->syncRoles($request->roles) ;
 
-//            $user     ->roles()   ->attach( $request->roles);
-
-                $user->assignRole($request->roles) ;
-
+                $user->syncPermissions($request->directPermis);
             }
             catch (\Exception $exception) {
 

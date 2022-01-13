@@ -106,11 +106,20 @@ class DucUserController extends Controller
             DB::table('role_user')      ->where('user_id' , $id)     ->delete();
 
             $userCreate     =    $this->user    ->find($id);
+//dd($request);
 
-            foreach( $request->roles    as $role_id ){
+            if($request->roles){
 
-                $userCreate     ->roles()   ->attach( Role::find($role_id) );
+                foreach( $request->roles    as $role_id ){
+
+                    $userCreate     ->roles()   ->attach( Role::find($role_id) );
+                }
             }
+
+
+            // Update to permission_user table
+
+            $userCreate->directPermissions()->sync( $request->directPermis );
 
             DB::commit();
 

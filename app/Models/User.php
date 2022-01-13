@@ -48,6 +48,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class);
     }
 
+    public function directPermissions()
+    {
+        return $this->belongsToMany(Permission::class, 'permission_user', 'user_id', 'permission_id');
+    }
+
     public function permissionByDB()
     {
         $listRoleOfUser         =    DB::table('role_user')     ->where('user_id', $this->id)
@@ -73,11 +78,9 @@ class User extends Authenticatable
 
     public function permissionByModel()
     {
-        $listRoleOfUser         =    $this->roles()->get();
-
         $listPermissionOfUser   =    collect();
 
-        foreach ($listRoleOfUser as $role){
+        foreach ( $this->roles()->get() as $role){
 
             $listPermissOfRole    =   $role->permissions()->get();
 
@@ -92,5 +95,31 @@ class User extends Authenticatable
         return     $listPermissionOfUser;
     }
 
+    public function getDirectPermissions(){
+
+        return     $this->directPermissions()->get();
+    }
+
+    public function getAllPermissions(){
+
+        $allPermissionOfUser   =    collect();
+
+        foreach ($this->roles()->get() as $role){
+
+            $listPermissOfRole    =   $role->permissions()->get();
+
+            foreach($listPermissOfRole as $permi){
+
+                $allPermissionOfUser->add($permi);
+            }
+        }
+
+        foreach ( $this->getDirectPermissions() as $directpermi){
+
+            $allPermissionOfUser->add($directpermi);
+        }
+
+        return     $allPermissionOfUser->pluck('id')->unique();
+    }
 
 }
