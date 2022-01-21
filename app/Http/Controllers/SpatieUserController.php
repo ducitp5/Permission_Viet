@@ -14,7 +14,6 @@ class SpatieUserController extends Controller
 //     private $user;
 //     private $role;
 
-
     public function __construct(User3 $user, Role $role, Permission $permi )
     {
         $this->user         =   $user;
@@ -46,7 +45,7 @@ class SpatieUserController extends Controller
     {
         $roles          =    $this->role->all();
 
-        return          view('user.add'     ,   compact('roles'));
+        return          view('user3.add'     ,   compact('roles'));
     }
 
     public function store(Request $request)
@@ -94,7 +93,7 @@ class SpatieUserController extends Controller
 
         $PermissionOfUser   =    $user->getPermissionsViaRoles();
 
-        return              view(   'user.edit',
+        return              view(   'user3.edit',
 
                                     compact('roles'   ,  'user'   ,  'listRoleOfUser'   ,
 

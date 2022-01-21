@@ -24,7 +24,7 @@ class SpatieRoleController extends Controller
     {
         $listRole   = $this->role->all();
 
-        return      view('role.index', compact('listRole'));
+        return      view('role3.index', compact('listRole'));
     }
 
 
@@ -32,7 +32,7 @@ class SpatieRoleController extends Controller
     {
         $permissions    = $this->permission->all();
 
-        return          view('role.add', compact('permissions'));
+        return          view('role3.add', compact('permissions'));
     }
 
 
@@ -61,7 +61,7 @@ class SpatieRoleController extends Controller
 
                                         ->pluck('permission_id');
 
-        return      view('role.edit'  ,  compact('permissions' , 'role' , 'getAllPermissionOfRole'));
+        return      view('role3.edit'  ,  compact('permissions' , 'role' , 'getAllPermissionOfRole'));
     }
 
 
