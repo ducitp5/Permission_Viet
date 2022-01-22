@@ -16,6 +16,11 @@
                     @endif
 
                     {{ __('You are logged in!') }}
+
+                    @can('edit-profile')
+
+                        <p>you can edit the profile</p>
+                    @endcan
                 </div>
             </div>
         </div>
