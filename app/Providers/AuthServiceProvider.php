@@ -27,7 +27,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('edit-profile', function($user){
 
-            return true;
+            return false;
         });
         //
     }

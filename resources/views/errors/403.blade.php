@@ -4,22 +4,20 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
+
+            <p style="color: rgb(236, 11, 11)">views(errors.403.blade.php)</p>
+
             <div class="card">
                 <div class="card-header">{{ __('Login') }}</div>
 
                 <div class="card-body">
-<?php 
-    
-//    dd(session());
-//    dd(session()->all());
-//    dd(Request::session());
-?>                
+
                 	@if(session()->has('errorLogin'))
                     <div>
                         <p class="alert alert-success text-center" id="login-fail">{{ session()->get('errorLogin') }}</p>
                     </div>
                     @endif
-                
+
                     <form method="POST" action="{{ route('login2') }}">
                         @csrf
 
