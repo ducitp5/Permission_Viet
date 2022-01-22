@@ -22,7 +22,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home'  , [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware(['can:edit-profile']);
+Route::get('/home'  , [App\Http\Controllers\HomeController::class, 'index'])->name('home');//->middleware(['can:edit-profile']);
 
 
 Route::middleware(['auth'])->group(function () {

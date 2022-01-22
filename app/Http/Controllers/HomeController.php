@@ -27,6 +27,8 @@ class HomeController extends Controller
      */
     public function index()
     {        
+        $this->authorize('edit-profile');
+
         return      view('home');
     }
     
