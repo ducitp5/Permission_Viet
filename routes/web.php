@@ -182,3 +182,5 @@ Route::middleware(['Spatieauth'])->group(function () {
 
 
 });
+
+Route::get('/post/{id}',       'PostController@show');
