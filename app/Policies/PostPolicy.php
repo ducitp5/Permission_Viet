@@ -10,6 +10,16 @@ class PostPolicy
 {
     use HandlesAuthorization;
 
+    public function before(User $user)
+    {
+        if($user->id === 1){        // too interdit user who id =1
+
+            return false;
+        }
+
+        return true;
+    }
+
     /**
      * Determine whether the user can view any models.
      *
