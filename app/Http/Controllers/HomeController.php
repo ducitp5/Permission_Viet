@@ -26,55 +26,55 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
-    {        
+    {
         $this->authorize('edit-profile');
 
         return      view('home');
     }
-    
+
     public static function convertCookie($cookies)
     {
         $convert    =   Array();
-        
+
         foreach ($cookies as $key => $val)
         {
             if(json_decode($val))    $convert[$key]  =   json_decode($val);
-            
+
             else                     $convert[$key]  =   $val;
         }
-        
+
         return  $convert;
     }
-        
+
     public function session(Request $request)
     {
         $SessCook                       =   array();
-                
+
         $SessCook['PHP_Cookies']        =   $_COOKIE;
         $SessCook['CookieConvert']      =   $this::convertCookie($_COOKIE);
         $SessCook['Laravel session']    =   session()->all();
-        
+
         session_start();
-        
+
         $SessCook['PHP_session']        =   $_SESSION;
-        
+
         dd($SessCook);
-        
+
 //        dd(session());              //    Illuminate\Session\SessionManager
-//        dd( new Session);           //    Illuminate\Support\Facades\Session 
+//        dd( new Session);           //    Illuminate\Support\Facades\Session
 //        dd( $request->session());   //    Illuminate\Session\Store
     }
-    
+
     public function auth()
     {
         dd(Auth::user());
         dd(\Auth());
     }
-    
+
     public function request(Request $request)
-    {   
+    {
  //       dd($request);
- 
+
         dd($request->expectsJson());
     }
 }
