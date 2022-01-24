@@ -11,6 +11,8 @@ class PostController extends Controller
     {
         $post   =   \App\Models\Post::findOrFail($id);
 
+        $this->authorize($post , 'view');   //function PostPolicy->view()       redirect to 403
+
         return view('post.post_show',   compact('post'));
     }
 }
